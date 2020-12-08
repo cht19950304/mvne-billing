@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.ApsFreeResMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.ApsFreeRes">
+        <id column="USER_ID" jdbcType="BIGINT" property="userId" />
+        <result column="PRODUCT_INS_ID" jdbcType="BIGINT" property="productInsId" />
+        <result column="ITEM_ID" jdbcType="BIGINT" property="itemId" />
+        <result column="USED_VALUE" jdbcType="DECIMAL" property="usedValue" />
+        <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
+        <result column="MEASURE_ID" jdbcType="DECIMAL" property="measureId" />
+        <result column="VALID_DATE" jdbcType="TIMESTAMP" property="validDate" />
+        <result column="EXPIRE_DATE" jdbcType="TIMESTAMP" property="expireDate" />
+        <result column="VERSION" jdbcType="BIGINT" property="version" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        USER_ID, PRODUCT_INS_ID, ITEM_ID, USED_VALUE, AMOUNT, MEASURE_ID, VALID_DATE, EXPIRE_DATE, VERSION
+    </sql>
+
+    <update id="updateDeleteFreeRes" parameterType="com.cmit.mvne.billing.user.analysis.entity.ApsFreeRes">
+        update aps_free_res set EXPIRE_DATE=#{expireDate} WHERE USER_ID=#{userId} and EXPIRE_DATE>#{expireDate}
+    </update>
+
+    <select id="selectResource" resultMap="BaseResultMap">
+        select USED_VALUE,AMOUNT from aps_free_res where USER_ID=#{userId} and EXPIRE_DATE>DATE_FORMAT(now(), "%Y-%m-%d %H:%i:%s") and MEASURE_ID='103'
+    </select>
+
+    <select id="selectFreeRes" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from aps_free_res where VALID_DATE between #{startTime} and #{endTime}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from aps_free_res where USER_ID=#{userId}
+    </select>
+    <select id="findByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from aps_free_res where USER_ID=#{userId} and MEASURE_ID="103" and USED_VALUE!=AMOUNT and EXPIRE_DATE>DATE_FORMAT(now(), "%Y-%m-%d %H:%i:%s")
+    </select>
+    <select id="findByUserIdProdIns" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from aps_free_res where USER_ID=#{userId} and MEASURE_ID="103" and PRODUCT_INS_ID=#{productInsId}
+    </select>
+    <select id="findValidFreeRes" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from aps_free_res where USER_ID=#{userId} and EXPIRE_DATE>DATE_FORMAT(now(), "%Y-%m-%d %H:%i:%s")
+    </select>
+
+</mapper>

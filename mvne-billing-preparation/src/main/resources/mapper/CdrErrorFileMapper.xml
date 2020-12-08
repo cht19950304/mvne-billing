@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.preparation.dao.CdrErrorFileMapper">
+  <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.preparation.entity.CdrErrorFile">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="ORIGIN_FILE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="FILE_PATH" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ERROR_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="STATUS" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="RECEIVE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="REDO_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ORIGIN_FILE, FILE_PATH, ERROR_CODE, STATUS, RECEIVE_TIME, CREATE_TIME, REDO_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdr_error_file
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cdr_error_file
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+<!--  <insert id="insert" parameterType="com.cmit.mvne.billing.preparation.entity.CdrErrorFile">-->
+<!--    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">-->
+<!--      SELECT LAST_INSERT_ID()-->
+<!--    </selectKey>-->
+<!--    insert into cdr_error_file (ORIGIN_FILE, FILE_PATH, ERROR_CODE, -->
+<!--      STATUS, RECEIVE_TIME, CREATE_TIME, -->
+<!--      REDO_TIME)-->
+<!--    values (#{originFile,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{errorCode,jdbcType=VARCHAR}, -->
+<!--      #{status,jdbcType=VARCHAR}, #{receiveTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, -->
+<!--      #{redoTime,jdbcType=TIMESTAMP})-->
+<!--  </insert>-->
+  <insert id="insertSelective" parameterType="com.cmit.mvne.billing.preparation.entity.CdrErrorFile">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cdr_error_file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="originFile != null">
+        ORIGIN_FILE,
+      </if>
+      <if test="filePath != null">
+        FILE_PATH,
+      </if>
+      <if test="errorCode != null">
+        ERROR_CODE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="receiveTime != null">
+        RECEIVE_TIME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="redoTime != null">
+        REDO_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="originFile != null">
+        #{originFile,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="errorCode != null">
+        #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTime != null">
+        #{receiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redoTime != null">
+        #{redoTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cmit.mvne.billing.preparation.entity.CdrErrorFile">
+    update cdr_error_file
+    <set>
+      <if test="originFile != null">
+        ORIGIN_FILE = #{originFile,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+        FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="errorCode != null">
+        ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTime != null">
+        RECEIVE_TIME = #{receiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redoTime != null">
+        REDO_TIME = #{redoTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cmit.mvne.billing.preparation.entity.CdrErrorFile">
+    update cdr_error_file
+    set ORIGIN_FILE = #{originFile,jdbcType=VARCHAR},
+      FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      RECEIVE_TIME = #{receiveTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REDO_TIME = #{redoTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByRejectedRequestDTOPage"
+          resultType="com.cmit.mvne.billing.preparation.entity.dto.RejectedDTO">
+    select ID id, ORIGIN_FILE filename, ERROR_CODE errorCode, RECEIVE_TIME fileReceiveTime, CREATE_TIME errorCreationTime, REDO_TIME reProcessTime, STATUS status
+    from cdr_error_file cef
+    where 1=1
+    <if test="filename != null and filename != ''">
+      and cef.ORIGIN_FILE = #{filename,jdbcType=VARCHAR}
+    </if>
+    <if test="errorCode != null and errorCode != ''">
+      and cef.ERROR_CODE = #{errorCode,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null and status != ''">
+      and cef.status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="startTime != null">
+      and cef.CREATE_TIME >= #{startTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null">
+      and #{endTime,jdbcType=TIMESTAMP} >= cef.CREATE_TIME
+    </if>
+    order by cef.CREATE_TIME
+  </select>
+  <select id="selectByRejectedRequestDTO"
+          resultType="com.cmit.mvne.billing.preparation.entity.dto.RejectedDTO">
+    select ID id, ORIGIN_FILE filename, ERROR_CODE errorCode, RECEIVE_TIME fileReceiveTime, CREATE_TIME errorCreationTime, REDO_TIME reProcessTime, STATUS status
+    from cdr_error_file cef
+    where 1=1
+    <if test="filename != null and filename != ''">
+      and cef.ORIGIN_FILE = #{filename,jdbcType=VARCHAR}
+    </if>
+    <if test="errorCode != null and errorCode != ''">
+      and cef.ERROR_CODE = #{errorCode,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null and status != ''">
+      and cef.status = #{status,jdbcType=VARCHAR}
+    </if>
+    <if test="startTime != null">
+      and cef.CREATE_TIME >= #{startTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null">
+      and #{endTime,jdbcType=TIMESTAMP} >= cef.CREATE_TIME
+    </if>
+    order by cef.CREATE_TIME
+  </select>
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.CdrGprsErrorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.CdrGprsError">
+        <result column="TABLE_ID" property="tableId" />
+        <result column="id" property="id" />
+        <result column="RECORD_TYPE" property="recordType" />
+        <result column="NUMBER_A" property="numberA" />
+        <result column="NUMBER_B" property="numberB" />
+        <result column="NUMBER_DIALED" property="numberDialed" />
+        <result column="MSISDN" property="msisdn" />
+        <result column="IMSI" property="imsi" />
+        <result column="EVENT_TIME_STAMP" property="eventTimeStamp" />
+        <result column="EVENT_DURATION" property="eventDuration" />
+        <result column="DOWNLOAD_VOL" property="downloadVol" />
+        <result column="UPLOAD_VOL" property="uploadVol" />
+        <result column="OPERATOR_CODE" property="operatorCode" />
+        <result column="PRERATED_AMOUNT" property="preratedAmount" />
+        <result column="APN" property="apn" />
+        <result column="NULLI" property="nulli" />
+        <result column="BROAD_WORKS" property="broadWorks" />
+        <result column="TELESERVICE_CODE" property="teleServiceCode" />
+        <result column="BEARERSERVICE_CODE" property="bearerServiceCode" />
+        <result column="OVERSEAS_CODE" property="overseasCode" />
+        <result column="VIDEO_INDICATOR" property="videoIndicator" />
+        <result column="SOURCE" property="source" />
+        <result column="SERVICE_ID" property="serviceId" />
+        <result column="QUANTITY" property="quantity" />
+        <result column="CUST_NUMBER" property="custNumber" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="CALL_IDENTIFICATION" property="callIdentification" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="FINISH_TIME" property="finishTime" />
+        <result column="RECEIVE_TIME" property="receiveTime" />
+        <result column="REDO_TIME" property="redoTime" />
+        <result column="ORIGINAL_FILE" property="originalFile" />
+        <result column="USER_ID" property="userId" />
+        <result column="PRODUCT_ID" property="productId" />
+        <result column="PRODUCT_INS_ID" property="productInsId" />
+        <result column="ITEM_ID" property="itemId" />
+        <result column="LOCAL_EVENT_TIME_STAMP" property="localEventTimeStamp" />
+        <result column="REDO_FLAG" property="redoFlag" />
+        <result column="RERAT_FLAG" property="reratFlag" />
+        <result column="ERR_CODE" property="errCode" />
+        <result column="ERR_DESC" property="errDesc" />
+        <result column="TAIL_NUMBER" property="tailNumber" />
+        <result column="LINE_NUMBER" property="lineNumber" />
+    </resultMap>
+
+    <resultMap id="QueryDtoMap" type="com.cmit.mvne.billing.user.analysis.dto.QueryCdrGprsErrDto">
+        <result column="TABLE_ID" property="tableId" />
+        <result column="MSISDN" property="msisdn" />
+        <result column="FINISH_TIME" property="finishTime" />
+        <result column="REDO_TIME" property="redoTime" />
+        <result column="ORIGINAL_FILE" property="originalFile" />
+        <result column="LOCAL_EVENT_TIME_STAMP" property="localEventTimeStamp" />
+        <result column="REDO_FLAG" property="redoFlag" />
+        <result column="ERR_CODE" property="errCode" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        table_id, id, msisdn, create_time, operator_code, nulli, download_vol, upload_vol, local_event_time_stamp, original_file, event_time_stamp, number_b, apn, bearer_service_code, broad_works, call_identification, cust_number, description, event_duration, finish_time, imsi, number_a, number_dialed, overseas_code, prerated_amount, quantity, record_type, service_id, source, tele_service_code, video_indicator, err_code, err_desc, receive_time, redo_time, redo_flag, rerat_flag, line_number, tail_number
+    </sql>
+
+    <select id="redoQuery" resultMap="com.cmit.mvne.billing.user.analysis.mapper.CdrGprsErrorMapper.QueryDtoMap">
+        select TABLE_ID, MSISDN, FINISH_TIME, REDO_TIME, ORIGINAL_FILE, LOCAL_EVENT_TIME_STAMP, REDO_FLAG, ERR_CODE
+        from rating_cdr_gprs_error ${ew.customSqlSegment}
+    </select>
+
+    <select id="errSelect" parameterType="String" resultMap="com.cmit.mvne.billing.user.analysis.mapper.CdrGprsErrorMapper.BaseResultMap">
+        ${sqlSegment}
+    </select>
+
+</mapper>

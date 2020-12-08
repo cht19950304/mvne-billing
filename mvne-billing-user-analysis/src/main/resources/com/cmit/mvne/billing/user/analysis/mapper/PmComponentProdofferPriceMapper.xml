@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.PmComponentProdofferPriceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.PmComponentProdofferPrice">
+        <id column="PRICE_ID" property="priceId" />
+        <result column="NAME" property="name" />
+        <result column="PRICE_TYPE" property="priceType" />
+        <result column="SERVICE_SPEC_ID" property="serviceSpecId" />
+        <result column="TAX_INCLUDED" property="taxIncluded" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="TENANT_ID" property="tenantId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        PRICE_ID, NAME, PRICE_TYPE, SERVICE_SPEC_ID, TAX_INCLUDED, DESCRIPTION, TENANT_ID
+    </sql>
+
+</mapper>

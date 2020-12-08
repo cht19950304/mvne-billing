@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.PmRatingTariffDtlMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.PmRatingTariffDtl">
+        <id column="PRICE_ID" property="priceId" />
+        <result column="TARIFF_DTL_ID" property="tariffDtlId" />
+        <result column="ITEM_ID" property="itemId" />
+        <result column="USAGE_PRICE_TYPE" property="usagePriceType" />
+        <result column="CHARGE_REF_FLAG" property="chargeRefFlag" />
+        <result column="TENANT_ID" property="tenantId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        TARIFF_DTL_ID, PRICE_ID, ITEM_ID, USAGE_PRICE_TYPE, CHARGE_REF_FLAG, TENANT_ID
+    </sql>
+
+</mapper>

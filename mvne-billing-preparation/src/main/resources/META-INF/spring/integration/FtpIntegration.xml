@@ -1,0 +1,73 @@
+<!--
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-ftp="http://www.springframework.org/schema/integration/ftp"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/integration/ftp http://www.springframework.org/schema/integration/ftp/spring-integration-ftp.xsd">
+
+	<bean id="ftpSessionFactory" class="org.springframework.integration.ftp.session.DefaultFtpSessionFactory">
+		<property name="host" value="${ftpserver.host}"/>
+		<property name="port" value="${ftpserver.port}"/>
+		<property name="username" value="${ftpserver.username}"/>
+		<property name="password" value="${ftpserver.password}"/>
+		<property name="clientMode" value="${ftpserver.clientMode}"/>
+		<property name="fileType" value="0"/>
+	</bean>
+
+	<int-ftp:inbound-channel-adapter id="ftpInbound"
+        channel="ftpChannel"
+	    session-factory="ftpSessionFactory"
+		auto-create-local-directory="true"
+		delete-remote-files="false"
+		preserve-timestamp="true"
+		max-fetch-size="5"
+		filter="ftpCompositeFileListFilter"
+		remote-directory="${ftpserver.remoteDirectory}"
+		local-directory="${collect.downloadDirectory}">
+		<int:poller id="ftpPoller"
+		    fixed-rate="${collect.fixedRate}"
+			max-messages-per-poll="${collect.maxMessagesPerPoll}"/>
+	</int-ftp:inbound-channel-adapter>
+
+
+	&lt;!&ndash; 话单采集组合过滤器 &ndash;&gt;
+	<bean id="ftpCompositeFileListFilter"
+		  class="org.springframework.integration.file.filters.CompositeFileListFilter">
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.integration.ftp.filters.FtpPersistentAcceptOnceFileListFilter">
+					<constructor-arg index="0" ref="ftpPropertiesPersistingMetadataStore"/>
+					<constructor-arg index="1" value="collect_"/>
+					<property name="flushOnUpdate" value="true"/>
+				</bean>
+				<bean class="org.springframework.integration.ftp.filters.FtpRegexPatternFileListFilter">
+					<constructor-arg value="${collect.filename.regexp}"/>
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+
+&lt;!&ndash;	<bean id="ftpPersistentAcceptOnceFileListFilter"&ndash;&gt;
+&lt;!&ndash;		  class="org.springframework.integration.ftp.filters.FtpPersistentAcceptOnceFileListFilter">&ndash;&gt;
+&lt;!&ndash;		<constructor-arg index="0" ref="ftpPropertiesPersistingMetadataStore"/>&ndash;&gt;
+&lt;!&ndash;		<constructor-arg index="1" value="collect_"/>&ndash;&gt;
+&lt;!&ndash;		<property name="flushOnUpdate" value="true"/>&ndash;&gt;
+&lt;!&ndash;	</bean>&ndash;&gt;
+
+&lt;!&ndash;	<bean id="acceptOnceFileListFilter" class="org.springframework.integration.file.filters.AcceptOnceFileListFilter"/>&ndash;&gt;
+
+	<bean id="ftpPropertiesPersistingMetadataStore" class="org.springframework.integration.metadata.PropertiesPersistingMetadataStore">
+		<property name="fileName" value="ftp-metadata-store.properties"/>
+		<property name="baseDirectory" value="${process.path}"/>
+	</bean>
+
+	<int:channel id="ftpChannel">
+		<int:queue/>
+	</int:channel>
+</beans>
+-->

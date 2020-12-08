@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.infomanage.mapper.IOrdOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.infomanage.entity.IOrdOrder">
+        <id column="ORDER_ID" property="orderId" />
+        <result column="ORDER_TYPE" property="orderType" />
+        <result column="BUSI_OPER_CODE" property="busiOperCode" />
+        <result column="CUST_ID" property="custId" />
+        <result column="USER_ID" property="userId" />
+        <result column="FACT_MONEY" property="factMoney" />
+        <result column="CREATE_DATE" property="createDate" />
+        <result column="DONE_DATE" property="doneDate" />
+        <result column="XFER_DATE" property="xferDate" />
+<!--        <result column="UPDATE_FLAG" property="updateFlag" />-->
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ORDER_ID, ORDER_TYPE, BUSI_OPER_CODE, CUST_ID,USER_ID, FACT_MONEY, CREATE_DATE, DONE_DATE, XFER_DATE,UPDATE_FLAG
+    </sql>
+
+    <select id="selectLastMinuteOrder"
+            resultType="com.cmit.mvne.billing.infomanage.entity.IOrdOrder">
+        select ORDER_ID, ORDER_TYPE, BUSI_OPER_CODE, CUST_ID,USER_ID, FACT_MONEY, CREATE_DATE, DONE_DATE, XFER_DATE,UPDATE_FLAG
+        from i_ord_order
+        /*where XFER_DATE &gt;= DATE_FORMAT(date_sub(now(),interval 1 minute), "%Y-%m-%d %H:%i:00")
+        and XFER_DATE &lt; DATE_FORMAT(now(), "%Y-%m-%d %H:%i:00")
+        order by CREATE_DATE asc*/
+    </select>
+
+    <select id="scanOrdOrder"
+            resultType="com.cmit.mvne.billing.infomanage.entity.IOrdOrder">
+        select ORDER_ID, ORDER_TYPE, BUSI_OPER_CODE, CUST_ID,USER_ID, FACT_MONEY, CREATE_DATE, DONE_DATE, XFER_DATE,UPDATE_FLAG
+        from i_ord_order
+        where UPDATE_FLAG=1
+        order by CREATE_DATE asc
+        limit 1000
+    </select>
+
+    <update id="updateFlag" parameterType="java.util.List">
+        update i_ord_order
+        set UPDATE_FLAG=2
+        where ORDER_ID in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item.orderId}
+        </foreach>
+    </update>
+
+</mapper>

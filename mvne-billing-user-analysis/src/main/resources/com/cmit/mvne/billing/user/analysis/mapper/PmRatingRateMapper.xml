@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.PmRatingRateMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.PmRatingRate">
+        <id column="RATE_ID" property="rateId" />
+        <result column="NAME" property="name" />
+        <result column="CURVE_ID" property="curveId" />
+        <result column="NEGATIVE_FLAG" property="negativeFlag" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="TENANT_ID" property="tenantId" />
+        <result column="MEASURE_ID" property="measureId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        RATE_ID, NAME, CURVE_ID, NEGATIVE_FLAG, DESCRIPTION, TENANT_ID, MEASURE_ID
+    </sql>
+
+</mapper>

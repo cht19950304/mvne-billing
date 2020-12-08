@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.ApsBalanceFeeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.ApsBalanceFee">
+        <id column="USER_ID" jdbcType="BIGINT" property="userId" />
+        <result column="REMAIN_FEE" jdbcType="DECIMAL" property="remainFee" />
+        <result column="MEASURE_ID" jdbcType="DECIMAL" property="measureId" />
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="VERSION" jdbcType="BIGINT" property="version" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        USER_ID, REMAIN_FEE, MEASURE_ID, UPDATE_TIME, VERSION
+    </sql>
+
+    <select id="selectByUserId" resultType="com.cmit.mvne.billing.user.analysis.entity.ApsBalanceFee"  >
+        select
+        <include refid="Base_Column_List" />
+        from aps_balance_fee where USER_ID=#{userId} order by UPDATE_TIME desc limit 1
+    </select>
+
+    <update id="updateBalanceFee" parameterType="com.cmit.mvne.billing.user.analysis.entity.ApsBalanceFee">
+        update aps_balance_fee set EXPIRE_DATE=#{expireDate} WHERE USER_ID=#{userId} and EXPIRE_DATE>#{expireDate}
+    </update>
+    <select id="selectBalanceFee" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from aps_balance_fee order by UPDATE_TIME desc limit 1;
+    </select>
+    <update id="updateBalance" parameterType="com.cmit.mvne.billing.user.analysis.entity.ApsBalanceFee">
+        update aps_balance_fee set REMAIN_FEE=#{remainFee},UPDATE_TIME=#{updateTime} where USER_ID=#{userId}
+    </update>
+</mapper>

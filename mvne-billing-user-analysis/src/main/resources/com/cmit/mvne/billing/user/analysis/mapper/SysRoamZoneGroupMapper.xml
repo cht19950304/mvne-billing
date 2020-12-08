@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.SysRoamZoneGroupMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.SysRoamZoneGroup">
+        <result column="COUNTRY_ID" property="countryId" />
+        <result column="ISO" property="iso" />
+        <result column="COUNTRY_NAME" property="countryName" />
+        <result column="COUNTRY_GROUP" property="countryGroup" />
+        <result column="GROUP_ID" property="groupId" />
+        <result column="GROUP_NAME" property="groupName" />
+        <result column="VALID_DATE" property="validDate" />
+        <result column="EXPIRE_DATE" property="expireDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        COUNTRY_ID, ISO, COUNTRY_NAME, COUNTRY_GROUP, GROUP_ID, GROUP_NAME, VALID_DATE, EXPIRE_DATE
+    </sql>
+
+</mapper>

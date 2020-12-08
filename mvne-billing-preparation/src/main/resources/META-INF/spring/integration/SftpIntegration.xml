@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-sftp="http://www.springframework.org/schema/integration/sftp"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/integration/sftp http://www.springframework.org/schema/integration/sftp/spring-integration-sftp.xsd">
+
+    <bean id="sftpSessionFactory" class="org.springframework.integration.file.remote.session.CachingSessionFactory">
+        <constructor-arg ref="defaultSftpSessionFactory" />
+    </bean>
+
+    <bean id="defaultSftpSessionFactory"
+          class="org.springframework.integration.sftp.session.DefaultSftpSessionFactory">
+        <property name="host" value="${sftpserver.host}"/>
+        <property name="password" value="${sftpserver.password}"/>
+        <property name="port" value="${sftpserver.port}"/>
+        <property name="user" value="${sftpserver.username}"/>
+        <property name="allowUnknownKeys" value="true"/>
+    </bean>
+
+    <int-sftp:inbound-channel-adapter id="sftpInbondAdapter"
+                                      channel="receiveChannel"
+                                      session-factory="sftpSessionFactory"
+                                      local-directory="${process.inputPath}"
+                                      remote-directory="${sftpserver.remoteDirectory}"
+                                      preserve-timestamp="true"
+                                      auto-create-local-directory="true"
+                                      delete-remote-files="false"
+                                      filter="sftpCompositeFileListFilter">
+        <int:poller fixed-rate="${process.fixedRate}" max-messages-per-poll="${process.maxMessagesPerPoll}"/>
+    </int-sftp:inbound-channel-adapter>
+
+    <!-- 话单采集组合过滤器 -->
+    <bean id="sftpCompositeFileListFilter"
+          class="org.springframework.integration.file.filters.CompositeFileListFilter">
+        <constructor-arg>
+            <list>
+                <bean class="org.springframework.integration.sftp.filters.SftpPersistentAcceptOnceFileListFilter">
+                    <constructor-arg index="0" ref="sftpPropertiesPersistingMetadataStore"/>
+                    <constructor-arg index="1" value="collect_"/>
+                    <property name="flushOnUpdate" value="true"/>
+                </bean>
+                <bean class="org.springframework.integration.sftp.filters.SftpRegexPatternFileListFilter">
+                    <constructor-arg value="${collect.filename.regexp}"/>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="sftpPropertiesPersistingMetadataStore" class="org.springframework.integration.metadata.PropertiesPersistingMetadataStore">
+        <property name="fileName" value="sftp-metadata-store.properties"/>
+        <property name="baseDirectory" value="${process.path}"/>
+    </bean>
+
+    <int:channel id="receiveChannel">
+        <int:queue/>
+    </int:channel>
+
+</beans>

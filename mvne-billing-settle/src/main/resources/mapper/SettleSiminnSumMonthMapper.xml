@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.settle.dao.SettleSiminnSumMonthMapper">
+  <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.settle.entity.SettleSiminnSumMonth">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="INVOICING_PERIOD" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="CHARGE_FEE" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="CHARGE_MEASURE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TOTAL_FEE" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="TOTAL_VALUE" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="ITEM_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ITEM_MEASURE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="UPDATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, INVOICING_PERIOD, CHARGE_FEE, CHARGE_MEASURE, TOTAL_FEE, TOTAL_VALUE, ITEM_NAME, 
+    ITEM_MEASURE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from settle_siminn_sum_month
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from settle_siminn_sum_month
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+<!--  <insert id="insert" parameterType="com.cmit.mvne.billing.settle.entity.SettleSiminnSumMonth">-->
+<!--    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">-->
+<!--      SELECT LAST_INSERT_ID()-->
+<!--    </selectKey>-->
+<!--    insert into settle_siminn_sum_month (INVOICING_PERIOD, CHARGE_FEE, CHARGE_MEASURE, -->
+<!--      TOTAL_FEE, TOTAL_VALUE, ITEM_NAME, -->
+<!--      ITEM_MEASURE, CREATE_TIME, UPDATE_TIME-->
+<!--      )-->
+<!--    values (#{invoicingPeriod,jdbcType=CHAR}, #{chargeFee,jdbcType=DECIMAL}, #{chargeMeasure,jdbcType=VARCHAR}, -->
+<!--      #{totalFee,jdbcType=DECIMAL}, #{totalValue,jdbcType=DECIMAL}, #{itemName,jdbcType=VARCHAR}, -->
+<!--      #{itemMeasure,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}-->
+<!--      )-->
+<!--  </insert>-->
+  <insert id="insertSelective" parameterType="com.cmit.mvne.billing.settle.entity.SettleSiminnSumMonth">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into settle_siminn_sum_month
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="invoicingPeriod != null">
+        INVOICING_PERIOD,
+      </if>
+      <if test="chargeFee != null">
+        CHARGE_FEE,
+      </if>
+      <if test="chargeMeasure != null">
+        CHARGE_MEASURE,
+      </if>
+      <if test="totalFee != null">
+        TOTAL_FEE,
+      </if>
+      <if test="totalValue != null">
+        TOTAL_VALUE,
+      </if>
+      <if test="itemName != null">
+        ITEM_NAME,
+      </if>
+      <if test="itemMeasure != null">
+        ITEM_MEASURE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="invoicingPeriod != null">
+        #{invoicingPeriod,jdbcType=CHAR},
+      </if>
+      <if test="chargeFee != null">
+        #{chargeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="chargeMeasure != null">
+        #{chargeMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null">
+        #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="totalValue != null">
+        #{totalValue,jdbcType=DECIMAL},
+      </if>
+      <if test="itemName != null">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemMeasure != null">
+        #{itemMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cmit.mvne.billing.settle.entity.SettleSiminnSumMonth">
+    update settle_siminn_sum_month
+    <set>
+      <if test="invoicingPeriod != null">
+        INVOICING_PERIOD = #{invoicingPeriod,jdbcType=CHAR},
+      </if>
+      <if test="chargeFee != null">
+        CHARGE_FEE = #{chargeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="chargeMeasure != null">
+        CHARGE_MEASURE = #{chargeMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null">
+        TOTAL_FEE = #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="totalValue != null">
+        TOTAL_VALUE = #{totalValue,jdbcType=DECIMAL},
+      </if>
+      <if test="itemName != null">
+        ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemMeasure != null">
+        ITEM_MEASURE = #{itemMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cmit.mvne.billing.settle.entity.SettleSiminnSumMonth">
+    update settle_siminn_sum_month
+    set INVOICING_PERIOD = #{invoicingPeriod,jdbcType=CHAR},
+      CHARGE_FEE = #{chargeFee,jdbcType=DECIMAL},
+      CHARGE_MEASURE = #{chargeMeasure,jdbcType=VARCHAR},
+      TOTAL_FEE = #{totalFee,jdbcType=DECIMAL},
+      TOTAL_VALUE = #{totalValue,jdbcType=DECIMAL},
+      ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      ITEM_MEASURE = #{itemMeasure,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByInvoicingPeriod" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from settle_siminn_sum_month
+    where INVOICING_PERIOD=#{invoicingPeriod}
+  </select>
+</mapper>

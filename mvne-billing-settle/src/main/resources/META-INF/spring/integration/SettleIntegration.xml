@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-jdbc="http://www.springframework.org/schema/integration/jdbc"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+       	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/jdbc http://www.springframework.org/schema/integration/jdbc/spring-integration-jdbc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--    <int:channel id="gprsSettleInboundChannel"/>-->
+<!--    <int:channel id="gprsSettleErrorChannel" />-->
+    <int-jdbc:inbound-channel-adapter channel="gprsSettleInboundChannel"
+                                      data-source="dataSource"
+                                      max-rows-per-poll="${settle.fetchMaxResult}"
+                                      row-mapper="cdrGprsSettleRowMapper"
+                                      query="select * from cdr_gprs_settle limit ${settle.fetchMaxResult}"
+                                      update="delete from cdr_gprs_settle where id in(:id)">
+        <int:poller fixed-rate="${settle.fetchFixRate}" error-channel="gprsSettleErrorChannel"  >
+            <int:transactional propagation="REQUIRED" transaction-manager="transactionManager"/>
+        </int:poller>
+    </int-jdbc:inbound-channel-adapter>
+    <bean id="cdrGprsSettleRowMapper"
+          class="com.cmit.mvne.billing.settle.handler.CdrGprsSettleRowMapper"/>
+
+    <int:service-activator input-channel="gprsSettleInboundChannel"
+                           output-channel="nullChannel"
+                           ref="settleHandler"
+                           requires-reply="true"
+                           method="handleCdr">
+    </int:service-activator>
+    <int:service-activator input-channel="gprsSettleErrorChannel"
+                           output-channel="nullChannel"
+                           ref="settleHandler"
+                           method="handleErrorMessage">
+    </int:service-activator>
+    <bean id="settleHandler" class="com.cmit.mvne.billing.settle.handler.GprsSettleHandler"/>
+
+</beans>

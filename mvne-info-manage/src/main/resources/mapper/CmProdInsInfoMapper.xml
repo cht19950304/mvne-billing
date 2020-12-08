@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.infomanage.mapper.CmProdInsInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.infomanage.entity.CmProdInsInfo">
+        <id column="USER_ID" property="userId" />
+        <result column="RECTYPE" property="rectype" />
+        <result column="PRODUCT_FEE" property="productFee" />
+        <result column="PRODUCT_ID" property="productId" />
+        <result column="PRODUCT_INSID" property="productInsId" />
+        <result column="VALID_DATE" property="validDate" />
+        <result column="EXPIRE_DATE" property="expireDate" />
+        <result column="OVER_DATE" property="overDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        USER_ID, RECTYPE, PRODUCT_FEE, PRODUCT_ID, PRODUCT_INS_ID, VALID_DATE, EXPIRE_DATE, OVER_DATE
+    </sql>
+
+</mapper>

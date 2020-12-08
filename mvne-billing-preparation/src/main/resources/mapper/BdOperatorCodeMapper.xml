@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.preparation.dao.BdOperatorCodeMapper">
+  <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.preparation.entity.BdOperatorCode">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="COUNTRY_INITIALS" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="COUNTRY_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="COUNTRY_NAME_CN" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="OPERATOR_CODE" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="OPERATOR_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="UPDATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, COUNTRY_INITIALS, COUNTRY_NAME, COUNTRY_NAME_CN, OPERATOR_CODE, OPERATOR_NAME, 
+    CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bd_operator_code
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from bd_operator_code
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+<!--  <insert id="insert" parameterType="com.cmit.mvne.billing.preparation.entity.BdOperatorCode">-->
+<!--    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">-->
+<!--      SELECT LAST_INSERT_ID()-->
+<!--    </selectKey>-->
+<!--    insert into bd_operator_code (COUNTRY_INITIALS, COUNTRY_NAME, COUNTRY_NAME_CN, -->
+<!--      OPERATOR_CODE, OPERATOR_NAME, CREATE_TIME, -->
+<!--      UPDATE_TIME)-->
+<!--    values (#{countryInitials,jdbcType=CHAR}, #{countryName,jdbcType=VARCHAR}, #{countryNameCn,jdbcType=VARCHAR}, -->
+<!--      #{operatorCode,jdbcType=CHAR}, #{operatorName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, -->
+<!--      #{updateTime,jdbcType=TIMESTAMP})-->
+<!--  </insert>-->
+  <insert id="insertSelective" parameterType="com.cmit.mvne.billing.preparation.entity.BdOperatorCode">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into bd_operator_code
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="countryInitials != null">
+        COUNTRY_INITIALS,
+      </if>
+      <if test="countryName != null">
+        COUNTRY_NAME,
+      </if>
+      <if test="countryNameCn != null">
+        COUNTRY_NAME_CN,
+      </if>
+      <if test="operatorCode != null">
+        OPERATOR_CODE,
+      </if>
+      <if test="operatorName != null">
+        OPERATOR_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="countryInitials != null">
+        #{countryInitials,jdbcType=CHAR},
+      </if>
+      <if test="countryName != null">
+        #{countryName,jdbcType=VARCHAR},
+      </if>
+      <if test="countryNameCn != null">
+        #{countryNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorCode != null">
+        #{operatorCode,jdbcType=CHAR},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cmit.mvne.billing.preparation.entity.BdOperatorCode">
+    update bd_operator_code
+    <set>
+      <if test="countryInitials != null">
+        COUNTRY_INITIALS = #{countryInitials,jdbcType=CHAR},
+      </if>
+      <if test="countryName != null">
+        COUNTRY_NAME = #{countryName,jdbcType=VARCHAR},
+      </if>
+      <if test="countryNameCn != null">
+        COUNTRY_NAME_CN = #{countryNameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorCode != null">
+        OPERATOR_CODE = #{operatorCode,jdbcType=CHAR},
+      </if>
+      <if test="operatorName != null">
+        OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cmit.mvne.billing.preparation.entity.BdOperatorCode">
+    update bd_operator_code
+    set COUNTRY_INITIALS = #{countryInitials,jdbcType=CHAR},
+      COUNTRY_NAME = #{countryName,jdbcType=VARCHAR},
+      COUNTRY_NAME_CN = #{countryNameCn,jdbcType=VARCHAR},
+      OPERATOR_CODE = #{operatorCode,jdbcType=CHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.PmProductMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.PmProduct">
+        <id column="PRODUCT_OFFERING_ID" property="productOfferingId" />
+        <result column="FEE" property="fee" />
+        <result column="ZONE_GROUP" property="zoneGroup" />
+        <result column="GROUP_ID" property="groupId" />
+        <result column="NAME" property="name" />
+        <result column="EFFECTIVE_TIME" property="effectiveTime" />
+        <result column="EFFECTIVE_DATE" property="effectiveDate" />
+        <result column="EXPIRE_DATE" property="expireDate" />
+        <result column="PROD_DESC" property="prodDesc" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        PRODUCT_OFFERING_ID, FEE, ZONE_GROUP, GROUP_ID, NAME, EFFECTIVE_TIME, EFFECTIVE_DATE, EXPIRE_DATE, PROD_DESC
+    </sql>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="productOfferingId">
+        <selectKey keyProperty="productOfferingId" order="BEFORE"
+                   resultType="java.lang.Long">
+            SELECT NEXT_PRODUCT_OFFERING_ID('PRODUCT_OFFERING$SEQ') productOfferingId
+        </selectKey>
+        INSERT INTO pm_product (PRODUCT_OFFERING_ID, FEE,
+        ZONE_GROUP, GROUP_ID, NAME,
+        EFFECTIVE_TIME, EFFECTIVE_DATE, EXPIRE_DATE, PROD_DESC)
+        VALUES (#{productOfferingId, jdbcType=BIGINT},
+        #{fee,jdbcType=DECIMAL},
+        #{zoneGroup, jdbcType=VARCHAR},
+        #{groupId, jdbcType=INTEGER},
+        #{name, jdbcType=VARCHAR},
+        #{effectiveTime, jdbcType=INTEGER},
+        #{effectiveDate, jdbcType=TIMESTAMP},
+        #{expireDate, jdbcType=TIMESTAMP},
+        #{prodDesc, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="selectByProductId" resultType="java.lang.String">
+        select NAME from pm_product where PRODUCT_OFFERING_ID=#{productId}
+    </select>
+
+</mapper>

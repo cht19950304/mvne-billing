@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.SysOperatorDefMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.SysOperatorDef">
+        <id column="OPERATOR_ID" property="operatorId" />
+        <result column="OPERATOR_CODE" property="operatorCode" />
+        <result column="OPERATOR_TYPE" property="operatorType" />
+        <result column="NAME" property="name" />
+        <result column="SIMPLE_NAME" property="simpleName" />
+        <result column="SHORT_NAME" property="shortName" />
+        <result column="REG_NO" property="regNo" />
+        <result column="TAX_NO" property="taxNo" />
+        <result column="LOGO" property="logo" />
+        <result column="EMAIL" property="email" />
+        <result column="BILL_FORMAT_ID" property="billFormatId" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="TENANT_ID" property="tenantId" />
+        <result column="IS_TENANT" property="isTenant" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        OPERATOR_ID, OPERATOR_CODE, OPERATOR_TYPE, NAME, SIMPLE_NAME, SHORT_NAME, REG_NO, TAX_NO, LOGO, EMAIL, BILL_FORMAT_ID, DESCRIPTION, TENANT_ID, IS_TENANT
+    </sql>
+
+</mapper>

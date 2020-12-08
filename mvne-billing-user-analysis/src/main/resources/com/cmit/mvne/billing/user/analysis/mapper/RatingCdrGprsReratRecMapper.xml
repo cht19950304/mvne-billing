@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.RatingCdrGprsReratRecMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.RatingCdrGprsReratRec">
+        <id column="id" property="id" />
+        <result column="number_b" property="numberB" />
+        <result column="apn" property="apn" />
+        <result column="bearer_service_code" property="bearerServiceCode" />
+        <result column="broad_works" property="broadWorks" />
+        <result column="call_identification" property="callIdentification" />
+        <result column="create_time" property="createTime" />
+        <result column="cust_number" property="custNumber" />
+        <result column="description" property="description" />
+        <result column="download_vol" property="downloadVol" />
+        <result column="event_duration" property="eventDuration" />
+        <result column="event_time_stamp" property="eventTimeStamp" />
+        <result column="finish_time" property="finishTime" />
+        <result column="imsi" property="imsi" />
+        <result column="local_event_time_stamp" property="localEventTimeStamp" />
+        <result column="msisdn" property="msisdn" />
+        <result column="nulli" property="nulli" />
+        <result column="number_a" property="numberA" />
+        <result column="number_dialed" property="numberDialed" />
+        <result column="operator_code" property="operatorCode" />
+        <result column="overseas_code" property="overseasCode" />
+        <result column="prerated_amount" property="preratedAmount" />
+        <result column="quantity" property="quantity" />
+        <result column="record_type" property="recordType" />
+        <result column="service_id" property="serviceId" />
+        <result column="source" property="source" />
+        <result column="tele_service_code" property="teleServiceCode" />
+        <result column="upload_vol" property="uploadVol" />
+        <result column="video_indicator" property="videoIndicator" />
+        <result column="original_file" property="originalFile" />
+        <result column="user_id" property="userId" />
+        <result column="product_id" property="productId" />
+        <result column="product_ins_id" property="productInsId" />
+        <result column="item_id" property="itemId" />
+        <result column="deduct_freeres" property="deductFreeres" />
+        <result column="rating_value" property="ratingValue" />
+        <result column="fee1" property="fee1" />
+        <result column="fee2" property="fee2" />
+        <result column="fee3" property="fee3" />
+        <result column="fee4" property="fee4" />
+        <result column="receive_time" property="receiveTime" />
+        <result column="redo_flag" property="redoFlag" />
+        <result column="rerat_flag" property="reratFlag" />
+        <result column="tail_number" property="tailNumber" />
+        <result column="line_number" property="lineNumber" />
+        <result column="RERAT_TIME" property="reratTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, number_b, apn, bearer_service_code, broad_works, call_identification, create_time, cust_number, description, download_vol, event_duration, event_time_stamp, finish_time, imsi, local_event_time_stamp, msisdn, nulli, number_a, number_dialed, operator_code, overseas_code, prerated_amount, quantity, record_type, service_id, source, tele_service_code, upload_vol, video_indicator, original_file, user_id, product_id, product_ins_id, item_id, deduct_freeres, rating_value, fee1, fee2, fee3, fee4, receive_time, redo_flag, rerat_flag, tail_number, line_number, rerat_time
+    </sql>
+
+</mapper>

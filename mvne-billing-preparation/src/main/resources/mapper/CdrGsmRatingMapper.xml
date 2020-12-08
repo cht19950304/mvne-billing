@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.preparation.dao.CdrGsmRatingMapper">
+  <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.preparation.entity.CdrGsmRating">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="RECORD_TYPE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NUMBER_A" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NUMBER_B" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NUMBER_DIALED" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="MSISDN" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="IMSI" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="EVENT_TIME_STAMP" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LOCAL_EVENT_TIME_STAMP" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="EVENT_DURATION" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="DOWNLOAD_VOL" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="UPLOAD_VOL" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="OPERATOR_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="PRERATED_AMOUNT" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="APN" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NULLI" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="BROAD_WORKS" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TELE_SERVICE_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="BEARER_SERVICE_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="OVERSEAS_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="VIDEO_INDICATOR" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SOURCE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SERVICE_ID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="QUANTITY" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CUST_NUMBER" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="DESCRIPTION" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CALL_IDENTIFICATION" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TAIL_NUMBER" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="ORIGINAL_FILE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LINE_NUMBER" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="RECEIVE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="FINISH_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECORD_TYPE, NUMBER_A, NUMBER_B, NUMBER_DIALED, MSISDN, IMSI, EVENT_TIME_STAMP, 
+    LOCAL_EVENT_TIME_STAMP, EVENT_DURATION, DOWNLOAD_VOL, UPLOAD_VOL, OPERATOR_CODE, 
+    PRERATED_AMOUNT, APN, NULLI, BROAD_WORKS, TELE_SERVICE_CODE, BEARER_SERVICE_CODE, 
+    OVERSEAS_CODE, VIDEO_INDICATOR, SOURCE, SERVICE_ID, QUANTITY, CUST_NUMBER, DESCRIPTION, 
+    CALL_IDENTIFICATION, TAIL_NUMBER, ORIGINAL_FILE, LINE_NUMBER, CREATE_TIME, RECEIVE_TIME, 
+    FINISH_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdr_gsm_rating
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cdr_gsm_rating
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+<!--  <insert id="insert" parameterType="com.cmit.mvne.billing.preparation.entity.CdrGsmRating">-->
+<!--    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">-->
+<!--      SELECT LAST_INSERT_ID()-->
+<!--    </selectKey>-->
+<!--    insert into cdr_gsm_rating (RECORD_TYPE, NUMBER_A, NUMBER_B, -->
+<!--      NUMBER_DIALED, MSISDN, IMSI, -->
+<!--      EVENT_TIME_STAMP, LOCAL_EVENT_TIME_STAMP, -->
+<!--      EVENT_DURATION, DOWNLOAD_VOL, UPLOAD_VOL, -->
+<!--      OPERATOR_CODE, PRERATED_AMOUNT, APN, -->
+<!--      NULLI, BROAD_WORKS, TELE_SERVICE_CODE, -->
+<!--      BEARER_SERVICE_CODE, OVERSEAS_CODE, VIDEO_INDICATOR, -->
+<!--      SOURCE, SERVICE_ID, QUANTITY, -->
+<!--      CUST_NUMBER, DESCRIPTION, CALL_IDENTIFICATION, -->
+<!--      TAIL_NUMBER, ORIGINAL_FILE, LINE_NUMBER, -->
+<!--      CREATE_TIME, RECEIVE_TIME, FINISH_TIME-->
+<!--      )-->
+<!--    values (#{recordType,jdbcType=VARCHAR}, #{numberA,jdbcType=VARCHAR}, #{numberB,jdbcType=VARCHAR}, -->
+<!--      #{numberDialed,jdbcType=VARCHAR}, #{msisdn,jdbcType=VARCHAR}, #{imsi,jdbcType=VARCHAR}, -->
+<!--      #{eventTimeStamp,jdbcType=VARCHAR}, #{localEventTimeStamp,jdbcType=TIMESTAMP}, -->
+<!--      #{eventDuration,jdbcType=INTEGER}, #{downloadVol,jdbcType=DECIMAL}, #{uploadVol,jdbcType=DECIMAL}, -->
+<!--      #{operatorCode,jdbcType=VARCHAR}, #{preratedAmount,jdbcType=VARCHAR}, #{apn,jdbcType=VARCHAR}, -->
+<!--      #{nulli,jdbcType=VARCHAR}, #{broadWorks,jdbcType=VARCHAR}, #{teleServiceCode,jdbcType=VARCHAR}, -->
+<!--      #{bearerServiceCode,jdbcType=VARCHAR}, #{overseasCode,jdbcType=VARCHAR}, #{videoIndicator,jdbcType=VARCHAR}, -->
+<!--      #{source,jdbcType=VARCHAR}, #{serviceId,jdbcType=VARCHAR}, #{quantity,jdbcType=VARCHAR}, -->
+<!--      #{custNumber,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{callIdentification,jdbcType=VARCHAR}, -->
+<!--      #{tailNumber,jdbcType=CHAR}, #{originalFile,jdbcType=VARCHAR}, #{lineNumber,jdbcType=BIGINT}, -->
+<!--      #{createTime,jdbcType=TIMESTAMP}, #{receiveTime,jdbcType=TIMESTAMP}, #{finishTime,jdbcType=TIMESTAMP}-->
+<!--      )-->
+<!--  </insert>-->
+  <insert id="insertSelective" parameterType="com.cmit.mvne.billing.preparation.entity.CdrGsmRating">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cdr_gsm_rating
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordType != null">
+        RECORD_TYPE,
+      </if>
+      <if test="numberA != null">
+        NUMBER_A,
+      </if>
+      <if test="numberB != null">
+        NUMBER_B,
+      </if>
+      <if test="numberDialed != null">
+        NUMBER_DIALED,
+      </if>
+      <if test="msisdn != null">
+        MSISDN,
+      </if>
+      <if test="imsi != null">
+        IMSI,
+      </if>
+      <if test="eventTimeStamp != null">
+        EVENT_TIME_STAMP,
+      </if>
+      <if test="localEventTimeStamp != null">
+        LOCAL_EVENT_TIME_STAMP,
+      </if>
+      <if test="eventDuration != null">
+        EVENT_DURATION,
+      </if>
+      <if test="downloadVol != null">
+        DOWNLOAD_VOL,
+      </if>
+      <if test="uploadVol != null">
+        UPLOAD_VOL,
+      </if>
+      <if test="operatorCode != null">
+        OPERATOR_CODE,
+      </if>
+      <if test="preratedAmount != null">
+        PRERATED_AMOUNT,
+      </if>
+      <if test="apn != null">
+        APN,
+      </if>
+      <if test="nulli != null">
+        NULLI,
+      </if>
+      <if test="broadWorks != null">
+        BROAD_WORKS,
+      </if>
+      <if test="teleServiceCode != null">
+        TELE_SERVICE_CODE,
+      </if>
+      <if test="bearerServiceCode != null">
+        BEARER_SERVICE_CODE,
+      </if>
+      <if test="overseasCode != null">
+        OVERSEAS_CODE,
+      </if>
+      <if test="videoIndicator != null">
+        VIDEO_INDICATOR,
+      </if>
+      <if test="source != null">
+        SOURCE,
+      </if>
+      <if test="serviceId != null">
+        SERVICE_ID,
+      </if>
+      <if test="quantity != null">
+        QUANTITY,
+      </if>
+      <if test="custNumber != null">
+        CUST_NUMBER,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="callIdentification != null">
+        CALL_IDENTIFICATION,
+      </if>
+      <if test="tailNumber != null">
+        TAIL_NUMBER,
+      </if>
+      <if test="originalFile != null">
+        ORIGINAL_FILE,
+      </if>
+      <if test="lineNumber != null">
+        LINE_NUMBER,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="receiveTime != null">
+        RECEIVE_TIME,
+      </if>
+      <if test="finishTime != null">
+        FINISH_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordType != null">
+        #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="numberA != null">
+        #{numberA,jdbcType=VARCHAR},
+      </if>
+      <if test="numberB != null">
+        #{numberB,jdbcType=VARCHAR},
+      </if>
+      <if test="numberDialed != null">
+        #{numberDialed,jdbcType=VARCHAR},
+      </if>
+      <if test="msisdn != null">
+        #{msisdn,jdbcType=VARCHAR},
+      </if>
+      <if test="imsi != null">
+        #{imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTimeStamp != null">
+        #{eventTimeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="localEventTimeStamp != null">
+        #{localEventTimeStamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventDuration != null">
+        #{eventDuration,jdbcType=INTEGER},
+      </if>
+      <if test="downloadVol != null">
+        #{downloadVol,jdbcType=DECIMAL},
+      </if>
+      <if test="uploadVol != null">
+        #{uploadVol,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorCode != null">
+        #{operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="preratedAmount != null">
+        #{preratedAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="apn != null">
+        #{apn,jdbcType=VARCHAR},
+      </if>
+      <if test="nulli != null">
+        #{nulli,jdbcType=VARCHAR},
+      </if>
+      <if test="broadWorks != null">
+        #{broadWorks,jdbcType=VARCHAR},
+      </if>
+      <if test="teleServiceCode != null">
+        #{teleServiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bearerServiceCode != null">
+        #{bearerServiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="overseasCode != null">
+        #{overseasCode,jdbcType=VARCHAR},
+      </if>
+      <if test="videoIndicator != null">
+        #{videoIndicator,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null">
+        #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="custNumber != null">
+        #{custNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="callIdentification != null">
+        #{callIdentification,jdbcType=VARCHAR},
+      </if>
+      <if test="tailNumber != null">
+        #{tailNumber,jdbcType=CHAR},
+      </if>
+      <if test="originalFile != null">
+        #{originalFile,jdbcType=VARCHAR},
+      </if>
+      <if test="lineNumber != null">
+        #{lineNumber,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiveTime != null">
+        #{receiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null">
+        #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cmit.mvne.billing.preparation.entity.CdrGsmRating">
+    update cdr_gsm_rating
+    <set>
+      <if test="recordType != null">
+        RECORD_TYPE = #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="numberA != null">
+        NUMBER_A = #{numberA,jdbcType=VARCHAR},
+      </if>
+      <if test="numberB != null">
+        NUMBER_B = #{numberB,jdbcType=VARCHAR},
+      </if>
+      <if test="numberDialed != null">
+        NUMBER_DIALED = #{numberDialed,jdbcType=VARCHAR},
+      </if>
+      <if test="msisdn != null">
+        MSISDN = #{msisdn,jdbcType=VARCHAR},
+      </if>
+      <if test="imsi != null">
+        IMSI = #{imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTimeStamp != null">
+        EVENT_TIME_STAMP = #{eventTimeStamp,jdbcType=VARCHAR},
+      </if>
+      <if test="localEventTimeStamp != null">
+        LOCAL_EVENT_TIME_STAMP = #{localEventTimeStamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventDuration != null">
+        EVENT_DURATION = #{eventDuration,jdbcType=INTEGER},
+      </if>
+      <if test="downloadVol != null">
+        DOWNLOAD_VOL = #{downloadVol,jdbcType=DECIMAL},
+      </if>
+      <if test="uploadVol != null">
+        UPLOAD_VOL = #{uploadVol,jdbcType=DECIMAL},
+      </if>
+      <if test="operatorCode != null">
+        OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="preratedAmount != null">
+        PRERATED_AMOUNT = #{preratedAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="apn != null">
+        APN = #{apn,jdbcType=VARCHAR},
+      </if>
+      <if test="nulli != null">
+        NULLI = #{nulli,jdbcType=VARCHAR},
+      </if>
+      <if test="broadWorks != null">
+        BROAD_WORKS = #{broadWorks,jdbcType=VARCHAR},
+      </if>
+      <if test="teleServiceCode != null">
+        TELE_SERVICE_CODE = #{teleServiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bearerServiceCode != null">
+        BEARER_SERVICE_CODE = #{bearerServiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="overseasCode != null">
+        OVERSEAS_CODE = #{overseasCode,jdbcType=VARCHAR},
+      </if>
+      <if test="videoIndicator != null">
+        VIDEO_INDICATOR = #{videoIndicator,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        SOURCE = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceId != null">
+        SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        QUANTITY = #{quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="custNumber != null">
+        CUST_NUMBER = #{custNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="callIdentification != null">
+        CALL_IDENTIFICATION = #{callIdentification,jdbcType=VARCHAR},
+      </if>
+      <if test="tailNumber != null">
+        TAIL_NUMBER = #{tailNumber,jdbcType=CHAR},
+      </if>
+      <if test="originalFile != null">
+        ORIGINAL_FILE = #{originalFile,jdbcType=VARCHAR},
+      </if>
+      <if test="lineNumber != null">
+        LINE_NUMBER = #{lineNumber,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiveTime != null">
+        RECEIVE_TIME = #{receiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null">
+        FINISH_TIME = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cmit.mvne.billing.preparation.entity.CdrGsmRating">
+    update cdr_gsm_rating
+    set RECORD_TYPE = #{recordType,jdbcType=VARCHAR},
+      NUMBER_A = #{numberA,jdbcType=VARCHAR},
+      NUMBER_B = #{numberB,jdbcType=VARCHAR},
+      NUMBER_DIALED = #{numberDialed,jdbcType=VARCHAR},
+      MSISDN = #{msisdn,jdbcType=VARCHAR},
+      IMSI = #{imsi,jdbcType=VARCHAR},
+      EVENT_TIME_STAMP = #{eventTimeStamp,jdbcType=VARCHAR},
+      LOCAL_EVENT_TIME_STAMP = #{localEventTimeStamp,jdbcType=TIMESTAMP},
+      EVENT_DURATION = #{eventDuration,jdbcType=INTEGER},
+      DOWNLOAD_VOL = #{downloadVol,jdbcType=DECIMAL},
+      UPLOAD_VOL = #{uploadVol,jdbcType=DECIMAL},
+      OPERATOR_CODE = #{operatorCode,jdbcType=VARCHAR},
+      PRERATED_AMOUNT = #{preratedAmount,jdbcType=VARCHAR},
+      APN = #{apn,jdbcType=VARCHAR},
+      NULLI = #{nulli,jdbcType=VARCHAR},
+      BROAD_WORKS = #{broadWorks,jdbcType=VARCHAR},
+      TELE_SERVICE_CODE = #{teleServiceCode,jdbcType=VARCHAR},
+      BEARER_SERVICE_CODE = #{bearerServiceCode,jdbcType=VARCHAR},
+      OVERSEAS_CODE = #{overseasCode,jdbcType=VARCHAR},
+      VIDEO_INDICATOR = #{videoIndicator,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=VARCHAR},
+      SERVICE_ID = #{serviceId,jdbcType=VARCHAR},
+      QUANTITY = #{quantity,jdbcType=VARCHAR},
+      CUST_NUMBER = #{custNumber,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      CALL_IDENTIFICATION = #{callIdentification,jdbcType=VARCHAR},
+      TAIL_NUMBER = #{tailNumber,jdbcType=CHAR},
+      ORIGINAL_FILE = #{originalFile,jdbcType=VARCHAR},
+      LINE_NUMBER = #{lineNumber,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      RECEIVE_TIME = #{receiveTime,jdbcType=TIMESTAMP},
+      FINISH_TIME = #{finishTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

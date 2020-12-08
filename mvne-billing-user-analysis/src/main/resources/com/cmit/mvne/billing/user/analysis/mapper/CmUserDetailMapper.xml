@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.CmUserDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.CmUserDetail">
+        <id column="USER_ID" jdbcType="BIGINT" property="userId" />
+        <result column="ACCT_ID" jdbcType="BIGINT" property="acctId" />
+        <result column="CUST_ID" jdbcType="BIGINT" property="custId" />
+        <result column="MSISDN" jdbcType="VARCHAR" property="msisdn" />
+        <result column="IMSI" jdbcType="VARCHAR"  property="imsi" />
+        <result column="CHANNEL_CODE" jdbcType="VARCHAR"  property="channelCode" />
+        <result column="VALID_DATE" jdbcType="TIMESTAMP" property="validDate" />
+        <result column="EXPIRE_DATE" jdbcType="TIMESTAMP" property="expireDate" />
+        <result column="USER_STATUS" jdbcType="VARCHAR" property="userStatus" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        USER_ID, ACCT_ID, CUST_ID, MSISDN,IMSI, CHANNEL_CODE, VALID_DATE, EXPIRE_DATE, USER_STATUS
+    </sql>
+
+    <update id="updateExpire" parameterType="com.cmit.mvne.billing.user.analysis.entity.CmUserDetail">
+        update cm_user_detail SET EXPIRE_DATE=#{expireDate} WHERE USER_ID=#{userId} and MSISDN=#{msisdn} and EXPIRE_DATE=DATE_FORMAT("2099-12-31 23:59:59","%Y-%m-%d %H:%i:%s") and USER_STATUS=#{userStatus}
+    </update>
+
+    <update id="updateChangeCard" parameterType="com.cmit.mvne.billing.user.analysis.entity.CmUserDetail">
+        update cm_user_detail SET EXPIRE_DATE=#{expireDate},USER_STATUS=#{userStatus} WHERE USER_ID=#{userId} and MSISDN=#{msisdn} and EXPIRE_DATE=DATE_FORMAT("2099-12-31 23:59:59","%Y-%m-%d %H:%i:%s") and (USER_STATUS='03' or USER_STATUS='02')
+    </update>
+
+    <update id="updateDeleteUserDetail" parameterType="com.cmit.mvne.billing.user.analysis.entity.CmUserDetail">
+        update cm_user_detail SET EXPIRE_DATE=#{expireDate} WHERE USER_ID=#{userId} and EXPIRE_DATE>#{expireDate}
+    </update>
+
+    <select id="selectStopCount" resultType="java.lang.Integer">
+        select count(*) from cm_user_detail where USER_ID=#{userId} and USER_STATUS='02' and EXPIRE_DATE>DATE_FORMAT(now(), "%Y-%m-%d %H:%i:%s")
+    </select>
+
+    <select id="selectUserDetail" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cm_user_detail where VALID_DATE between #{startTime} and #{endTime}
+    </select>
+
+    <select id="findAllByMsisdn" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cm_user_detail where MSISDN=#{msisdn}
+    </select>
+
+    <select id="findValidUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cm_user_detail where MSISDN=#{msisdn} and EXPIRE_DATE>DATE_FORMAT(now(), "%Y-%m-%d %H:%i:%s")
+    </select>
+
+</mapper>

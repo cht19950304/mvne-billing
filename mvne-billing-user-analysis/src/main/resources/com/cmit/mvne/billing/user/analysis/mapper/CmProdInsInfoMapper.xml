@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.CmProdInsInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.CmProdInsInfo">
+        <id column="USER_ID" jdbcType="BIGINT" property="userId" />
+        <result column="RECTYPE" jdbcType="VARCHAR" property="rectype" />
+        <result column="PRODUCT_FEE" jdbcType="DECIMAL" property="productFee" />
+        <result column="PRODUCT_ID" jdbcType="BIGINT" property="productId" />
+        <result column="PRODUCT_INS_ID" jdbcType="BIGINT" property="productInsId" />
+        <result column="VALID_DATE" jdbcType="TIMESTAMP" property="validDate" />
+        <result column="EXPIRE_DATE" jdbcType="TIMESTAMP" property="expireDate" />
+        <result column="OVER_DATE" jdbcType="TIMESTAMP" property="overDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        USER_ID, RECTYPE, PRODUCT_FEE, PRODUCT_ID, PRODUCT_INS_ID, VALID_DATE, EXPIRE_DATE, OVER_DATE
+    </sql>
+
+    <update id="updateDeleteProdInsInfo" parameterType="com.cmit.mvne.billing.user.analysis.entity.CmProdInsInfo">
+        update cm_prod_ins_info SET EXPIRE_DATE=#{expireDate} WHERE USER_ID=#{userId} and EXPIRE_DATE>#{expireDate}
+    </update>
+
+    <select id="selectProdInsInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cm_prod_ins_info where VALID_DATE between #{startTime} and #{endTime}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cm_prod_ins_info where USER_ID=#{userId}
+    </select>
+
+    <select id="findValidProd" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cm_prod_ins_info where USER_ID=#{userId} and EXPIRE_DATE>DATE_FORMAT(now(), "%Y-%m-%d %H:%i:%s")
+    </select>
+
+</mapper>

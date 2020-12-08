@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.PmProductPricingPlanMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.PmProductPricingPlan">
+        <id column="PRODUCT_OFFERING_ID" property="productOfferingId" />
+        <result column="POLICY_ID" property="policyId" />
+        <result column="PRIORITY" property="priority" />
+        <result column="MAIN_PROMOTION" property="mainPromotion" />
+        <result column="DISP_FLAG" property="dispFlag" />
+        <result column="TENANT_ID" property="tenantId" />
+        <result column="PRICING_PLAN_ID" property="pricingPlanId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        PRODUCT_OFFERING_ID, POLICY_ID, PRIORITY, MAIN_PROMOTION, DISP_FLAG, TENANT_ID, PRICING_PLAN_ID
+    </sql>
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.infomanage.mapper.CmUserDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.infomanage.entity.CmUserDetail">
+        <id column="USER_ID" property="userId" />
+        <result column="ACCT_ID" property="acctId" />
+        <result column="CUST_ID" property="custId" />
+        <result column="MSISDN" property="msisdn" />
+        <result column="IMSI" property="imsi" />
+        <result column="CHANNEL_CODE" property="channelCode" />
+        <result column="VALID_DATE" property="validDate" />
+        <result column="EXPIRE_DATE" property="expireDate" />
+        <result column="USER_STATUS" property="userStatus" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        USER_ID, ACCT_ID, CUST_ID, MSISDN,IMSI, CHANNEL_CODE, VALID_DATE, EXPIRE_DATE, USER_STATUS
+    </sql>
+
+    <update id="updateExpire" parameterType="com.cmit.mvne.billing.infomanage.entity.CmUserDetail">
+        update CM_USER_DETAIL SET EXPIRE_DATE=#{expireDate} WHERE USER_ID=#{userId} and MSISDN=#{msisdn} and EXPIRE_DATE=DATE_FORMAT("2099-12-31 00:00:00","%Y-%m-%d %H:%i:%s") and USER_STATUS=#{userStatus}
+    </update>
+
+</mapper>

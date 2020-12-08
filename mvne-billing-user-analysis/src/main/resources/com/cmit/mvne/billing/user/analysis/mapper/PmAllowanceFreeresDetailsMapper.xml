@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.PmAllowanceFreeresDetailsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.PmAllowanceFreeresDetails">
+        <id column="PRICE_ID" property="priceId" />
+        <result column="FREERES_ITEM" property="freeresItem" />
+        <result column="TITLE_ROLE_ID" property="titleRoleId" />
+        <result column="INVALID_PROD_USE_FLAG" property="invalidProdUseFlag" />
+        <result column="CYCLE_REF_MODE" property="cycleRefMode" />
+        <result column="CYCLE_UNIT" property="cycleUnit" />
+        <result column="CYCLE_TYPE" property="cycleType" />
+        <result column="REF_MEMBER_NUM" property="refMemberNum" />
+        <result column="CYCLE_NUM_FORMULA" property="cycleNumFormula" />
+        <result column="TENANT_ID" property="tenantId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        PRICE_ID, FREERES_ITEM, TITLE_ROLE_ID, INVALID_PROD_USE_FLAG, CYCLE_REF_MODE, CYCLE_UNIT, CYCLE_TYPE, REF_MEMBER_NUM, CYCLE_NUM_FORMULA, TENANT_ID
+    </sql>
+
+</mapper>

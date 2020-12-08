@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.RsSysIntlOperInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.RsSysIntlOperInfo">
+        <id column="OPERATOR_ID" property="operatorId" />
+        <result column="ID" property="id" />
+        <result column="IMSI_HEAD" property="imsiHead" />
+        <result column="ENGLISH_NAME" property="englishName" />
+        <result column="COUNTRY_ID" property="countryId" />
+        <result column="PROV_CODE" property="provCode" />
+        <result column="TAP_VERSION" property="tapVersion" />
+        <result column="TAP_RELEASE" property="tapRelease" />
+        <result column="TAP_DECIMAL_PLACES" property="tapDecimalPlaces" />
+        <result column="TAX_TREATMENT" property="taxTreatment" />
+        <result column="TAX_RATE" property="taxRate" />
+        <result column="MEASURE_TYPE_ID" property="measureTypeId" />
+        <result column="REPORT_ERROR_TYPE" property="reportErrorType" />
+        <result column="NETWORK_STATEMENT" property="networkStatement" />
+        <result column="VALID_DATE" property="validDate" />
+        <result column="EXPIRE_DATE" property="expireDate" />
+        <result column="MODIFY_DATE" property="modifyDate" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="TENANT_ID" property="tenantId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, OPERATOR_ID, IMSI_HEAD, ENGLISH_NAME, COUNTRY_ID, PROV_CODE, TAP_VERSION, TAP_RELEASE, TAP_DECIMAL_PLACES, TAX_TREATMENT, TAX_RATE, MEASURE_TYPE_ID, REPORT_ERROR_TYPE, NETWORK_STATEMENT, VALID_DATE, EXPIRE_DATE, MODIFY_DATE, DESCRIPTION, TENANT_ID
+    </sql>
+
+</mapper>

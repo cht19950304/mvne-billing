@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.CdrVoiceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.CdrVoice">
+        <result column="ID" property="id" />
+        <result column="RECORD_TYPE" property="recordType" />
+        <result column="CALL_TYPE" property="callType" />
+        <result column="NUMBER_A" property="numberA" />
+        <result column="NUMBER_B" property="numberB" />
+        <result column="NUMBER_DIALED" property="numberDialed" />
+        <result column="MSISDN" property="msisdn" />
+        <result column="IMSI" property="imsi" />
+        <result column="EVENT_TIME_STAMP" property="eventTimeStamp" />
+        <result column="EVENT_DURATION" property="eventDuration" />
+        <result column="DOWNLOAD_VOL" property="downloadVol" />
+        <result column="UPLOAD_VOL" property="uploadVol" />
+        <result column="OPERATOR_CODE" property="operatorCode" />
+        <result column="PRERATED_AMOUNT" property="preratedAmount" />
+        <result column="APN" property="apn" />
+        <result column="NULLI" property="nulli" />
+        <result column="BROAD_WORKS" property="broadWorks" />
+        <result column="TELESERVICE_CODE" property="teleserviceCode" />
+        <result column="BEARERSERVICE_CODE" property="bearerserviceCode" />
+        <result column="OVERSEAS_CODE" property="overseasCode" />
+        <result column="VIDEO_INDICATOR" property="videoIndicator" />
+        <result column="SOURCE" property="source" />
+        <result column="SERVICE_ID" property="serviceId" />
+        <result column="QUANTITY" property="quantity" />
+        <result column="CUST_NUMBER" property="custNumber" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="CALL_INDENTIFICATION" property="callIndentification" />
+        <result column="PRODUCT_ID" property="productId" />
+        <result column="FEE1" property="fee1" />
+        <result column="FEE2" property="fee2" />
+        <result column="FEE3" property="fee3" />
+        <result column="FEE4" property="fee4" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, RECORD_TYPE, CALL_TYPE, NUMBER_A, NUMBER_B, NUMBER_DIALED, MSISDN, IMSI, EVENT_TIME_STAMP, EVENT_DURATION, DOWNLOAD_VOL, UPLOAD_VOL, OPERATOR_CODE, PRERATED_AMOUNT, APN, NULLI, BROAD_WORKS, TELESERVICE_CODE, BEARERSERVICE_CODE, OVERSEAS_CODE, VIDEO_INDICATOR, SOURCE, SERVICE_ID, QUANTITY, CUST_NUMBER, DESCRIPTION, CALL_INDENTIFICATION, PRODUCT_ID, FEE1, FEE2, FEE3, FEE4
+    </sql>
+
+    <!--    传Map插入一条数据 -->
+    <!--    <insert id="insertMapData" parameterType="java.util.Map" >
+            insert into ${tablename}
+            <foreach collection="content.keys" item="key" index="index" open="(" close=")"
+                     separator=",">
+                ${key}
+            </foreach>
+            values
+            <foreach collection="content.values" item="value" index="index" open="("
+                     close=")" separator=",">
+                #{value}
+            </foreach>
+        </insert>-->
+
+</mapper>

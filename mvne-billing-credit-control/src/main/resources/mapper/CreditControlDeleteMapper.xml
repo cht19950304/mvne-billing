@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.creditcontrol.mapper.CreditControlDeleteMapper">
+
+    <resultMap id="creditControlDelete" type="com.cmit.mvne.billing.creditcontrol.entity.CreditControlDelete">
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="MSISDN" jdbcType="VARCHAR" property="msisdn"/>
+        <result column="RESULT" jdbcType="VARCHAR" property="result"/>
+        <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+    </resultMap>
+</mapper>

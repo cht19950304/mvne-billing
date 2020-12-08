@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.PmServiceSpecMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.PmServiceSpec">
+        <id column="SERVICE_SPEC_ID" property="serviceSpecId" />
+        <result column="NAME" property="name" />
+        <result column="VALID_DATE" property="validDate" />
+        <result column="EXPIRE_DATE" property="expireDate" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="TENANT_ID" property="tenantId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        SERVICE_SPEC_ID, NAME, VALID_DATE, EXPIRE_DATE, DESCRIPTION, TENANT_ID
+    </sql>
+
+</mapper>

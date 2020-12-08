@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.CdrGprsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.CdrGprs">
+        <id column="ID" property="id" />
+        <result column="RECORD_TYPE" property="recordType" />
+        <result column="NUMBER_A" property="numberA" />
+        <result column="NUMBER_B" property="numberB" />
+        <result column="NUMBER_DIALED" property="numberDialed" />
+        <result column="MSISDN" property="msisdn" />
+        <result column="IMSI" property="imsi" />
+        <result column="EVENT_TIME_STAMP" property="eventTimeStamp" />
+        <result column="EVENT_DURATION" property="eventDuration" />
+        <result column="DOWNLOAD_VOL" property="downloadVol" />
+        <result column="UPLOAD_VOL" property="uploadVol" />
+        <result column="OPERATOR_CODE" property="operatorCode" />
+        <result column="PRERATED_AMOUNT" property="preratedAmount" />
+        <result column="APN" property="apn" />
+        <result column="NULLI" property="nulli" />
+        <result column="BROAD_WORKS" property="broadWorks" />
+        <result column="TELESERVICE_CODE" property="teleServiceCode" />
+        <result column="BEARERSERVICE_CODE" property="bearerServiceCode" />
+        <result column="OVERSEAS_CODE" property="overseasCode" />
+        <result column="VIDEO_INDICATOR" property="videoIndicator" />
+        <result column="SOURCE" property="source" />
+        <result column="SERVICE_ID" property="serviceId" />
+        <result column="QUANTITY" property="quantity" />
+        <result column="CUST_NUMBER" property="custNumber" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="CALL_IDENTIFICATION" property="callIdentification" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="FINISH_TIME" property="finishTime" />
+        <result column="RECEIVE_TIME" property="receiveTime" />
+        <result column="RERAT_TIME" property="reratTime" />
+        <result column="ORIGINAL_FILE" property="originalFile" />
+        <result column="USER_ID" property="userId" />
+        <result column="PRODUCT_ID" property="productId" />
+        <result column="PRODUCT_INS_ID" property="productInsId" />
+        <result column="ITEM_ID" property="itemId" />
+        <result column="LOCAL_EVENT_TIME_STAMP" property="localEventTimeStamp" />
+        <result column="DEDUCT_FREERES" property="deductFreeres" />
+        <result column="RATING_VALUE" property="ratingValue" />
+        <result column="FEE1" property="fee1" />
+        <result column="FEE2" property="fee2" />
+        <result column="FEE3" property="fee3" />
+        <result column="FEE4" property="fee4" />
+        <result column="REDO_FLAG" property="redoFlag" />
+        <result column="RERAT_FLAG" property="reratFlag" />
+        <result column="TAIL_NUMBER" property="tailNumber" />
+        <result column="LINE_NUMBER" property="lineNumber" />
+    </resultMap>
+
+    <resultMap id="selectCdrInfoMap" type="com.cmit.mvne.billing.user.analysis.entity.QueryUserCdrInfoDto">
+        <result column="MSISDN" jdbcType="VARCHAR" property="msisdn" />
+        <result column="LOCAL_EVENT_TIME_STAMP" jdbcType="TIMESTAMP" property="localEventTimeStamp" />
+        <result column="EVENT_TIME_STAMP" jdbcType="VARCHAR" property="eventTimeStamp" />
+        <result column="OPERATOR_CODE" jdbcType="VARCHAR" property="operatorCode" />
+        <result column="APN" jdbcType="VARCHAR" property="apn" />
+        <result column="EVENT_DURATION" jdbcType="INTEGER" property="eventDuration" />
+        <result column="DOWNLOAD_VOL" jdbcType="DECIMAL" property="downloadVol" />
+        <result column="UPLOAD_VOL" jdbcType="DECIMAL" property="uploadVol" />
+        <result column="FEE1" jdbcType="DECIMAL" property="fee1" />
+    </resultMap>
+
+    <resultMap id="QueryDtoMap" type="com.cmit.mvne.billing.user.analysis.dto.QueryCdrGprsDto">
+        <id column="ID" property="id" />
+        <result column="MSISDN" property="msisdn" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="FINISH_TIME" property="finishTime" />
+        <result column="ORIGINAL_FILE" property="originalFile" />
+        <result column="LOCAL_EVENT_TIME_STAMP" property="localEventTimeStamp" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List" >
+        ID, RECORD_TYPE, NUMBER_A, NUMBER_B, NUMBER_DIALED, MSISDN, IMSI, EVENT_TIME_STAMP, EVENT_DURATION, DOWNLOAD_VOL, UPLOAD_VOL, OPERATOR_CODE, PRERATED_AMOUNT, APN, NULLI, BROAD_WORKS, TELESERVICE_CODE, BEARERSERVICE_CODE, OVERSEAS_CODE, VIDEO_INDICATOR, SOURCE, SERVICE_ID, QUANTITY, CUST_NUMBER, DESCRIPTION, CALL_IDENTIFICATION, ORIGINAL_FILE, USER_ID, PRODUCT_ID, PRODUCT_INS_ID, ITEM_ID, LOCAL_EVENT_TIMESTAMP, DEDUCT_FREERES, RATING_VALUE, FEE1, FEE2, FEE3, FEE4, REDO_FLAG, RERAT_FLAG, line_number, tail_number, rerat_time
+    </sql>
+
+    <select id="reratQueryCdr" resultMap="com.cmit.mvne.billing.user.analysis.mapper.CdrGprsMapper.QueryDtoMap">
+        select ID, MSISDN, CREATE_TIME, FINISH_TIME, ORIGINAL_FILE, LOCAL_EVENT_TIME_STAMP
+        from rating_cdr_gprs ${ew.customSqlSegment}
+    </select>
+
+<!--    <select id="countMulSelectCdr" resultType="integer">
+        SELECT count(*) FROM (
+        <foreach collection="tableNameList" item="item" index="index" separator="union all">
+            SELECT * FROM rating_cdr_gprs_${item}
+            WHERE MSISDN='${msisdn}' and  RECORD_TYPE='${xdrType}' and LOCAL_EVENT_TIME_STAMP between  #{startDate} and  #{endDate}
+        </foreach>
+        )alias
+    </select>-->
+
+    <select id="mulSelectCdrInfo" resultMap="selectCdrInfoMap"  >
+        SELECT MSISDN,LOCAL_EVENT_TIME_STAMP,EVENT_TIME_STAMP,OPERATOR_CODE,APN,EVENT_DURATION,DOWNLOAD_VOL,UPLOAD_VOL,FEE1 FROM (
+        <foreach collection="tableNameList" item="item" index="index" separator="union all">
+            SELECT MSISDN,LOCAL_EVENT_TIME_STAMP,EVENT_TIME_STAMP,OPERATOR_CODE,APN,EVENT_DURATION,DOWNLOAD_VOL,UPLOAD_VOL,FEE1 FROM rating_cdr_gprs_${item}
+            WHERE MSISDN='${msisdn}' and  RECORD_TYPE='${xdrType}' and LOCAL_EVENT_TIME_STAMP between  #{startDate} and  #{endDate}
+        </foreach>
+        )alias
+<!--        <if test="start != null and end != null">
+            limit #{start}, #{end}
+        </if>-->
+    </select>
+
+    <select id="checkTableExistsWithShow" parameterType="String" resultType="java.util.Map">
+        show tables like #{tableName}
+    </select>
+
+    <select id="cdrSelect" parameterType="String" resultMap="com.cmit.mvne.billing.user.analysis.mapper.CdrGprsMapper.BaseResultMap">
+        ${sqlSegment}
+    </select>
+
+    <update id="createTableByDate" parameterType="String">
+        create table rating_cdr_gprs_${cdrDate} like rating_cdr_gprs_${format}
+    </update>
+
+    <!--    传Map插入一条数据 -->
+    <!--    <insert id="insertMapData" parameterType="java.util.Map" >
+            insert into ${tablename}
+            <foreach collection="content.keys" item="key" index="index" open="(" close=")"
+                     separator=",">
+                ${key}
+            </foreach>
+            values
+            <foreach collection="content.values" item="value" index="index" open="("
+                     close=")" separator=",">
+                #{value}
+            </foreach>
+        </insert>-->
+
+</mapper>

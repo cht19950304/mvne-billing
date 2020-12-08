@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.PmProductDupMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.PmProductDup">
+        <result column="PRODUCT_ID" property="productId" />
+        <result column="NAME" property="name" />
+        <result column="FEE" property="fee" />
+        <result column="AMOUNT" property="amount" />
+        <result column="MEASURE_ID" property="measureId" />
+        <result column="RATING_FEE" property="ratingFee" />
+        <result column="RATING_MEASURE_ID" property="ratingMeasureId" />
+        <result column="RATING_AMOUNT" property="ratingAmount" />
+        <result column="RATING_AMOUNT_MEASURE_ID" property="ratingAmountMeasureId" />
+        <result column="COUNTRY_GROUP" property="countryGroup" />
+        <result column="GROUP_ID" property="groupId" />
+        <result column="EFFECTIVE_TIME" property="effectiveTime" />
+        <result column="EFFECTIVE_DATE" property="effectiveDate" />
+        <result column="EXPIRE_DATE" property="expireDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        PRODUCT_ID, NAME, FEE, AMOUNT, MEASURE_ID, RATING_FEE, RATING_MEASURE_ID, RATING_AMOUNT, RATING_AMOUNT_MEASURE_ID, COUNTRY_GROUP, GROUP_ID, EFFECTIVE_TIME, EFFECTIVE_DATE, EXPIRE_DATE
+    </sql>
+
+    <select id="selectByProductId" resultType="java.math.BigDecimal">
+        select MEASURE_ID from pm_product_dup where PRODUCT_ID=#{productId}
+    </select>
+
+</mapper>

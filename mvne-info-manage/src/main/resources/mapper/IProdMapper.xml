@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.infomanage.mapper.IProdMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.infomanage.entity.IProd">
+        <id column="ORDER_ID" property="orderId" />
+        <result column="USER_ID" property="userId" />
+        <result column="RECTYPE" property="rectype" />
+        <result column="PRODUCT_FEE" property="productFee" />
+        <result column="PRODUCT_ID" property="productId" />
+        <result column="PRODUCT_INS_ID" property="productInsId" />
+        <result column="VALID_DATE" property="validDate" />
+        <result column="EXPIRE_DATE" property="expireDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ORDER_ID, USER_ID, RECTYPE, PRODUCT_FEE , PRODUCT_ID, PRODUCT_INS_ID, VALID_DATE, EXPIRE_DATE
+    </sql>
+    
+    <select id="selectByOrderId" parameterType="Long" resultType="com.cmit.mvne.billing.infomanage.entity.IProd">
+        select ORDER_ID, USER_ID, RECTYPE, PRODUCT_FEE , PRODUCT_ID, PRODUCT_INS_ID, VALID_DATE, EXPIRE_DATE
+        from i_prod
+        where ORDER_ID=#{orderId}
+    </select>
+
+    <select id="selectByUserId" parameterType="Long" resultType="com.cmit.mvne.billing.infomanage.entity.IProd">
+        select * from i_prod where USER_ID=#{userId}
+    </select>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.PmAllowanceFreeresSegmentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.PmAllowanceFreeresSegment">
+        <id column="PRICE_ID" property="priceId" />
+        <result column="START_VALUE" property="startValue" />
+        <result column="END_VALUE" property="endValue" />
+        <result column="AMOUNT" property="amount" />
+        <result column="FORMULA_ID" property="formulaId" />
+        <result column="LIMIT_AMOUNT" property="limitAmount" />
+        <result column="TENANT_ID" property="tenantId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        PRICE_ID, START_VALUE, END_VALUE, AMOUNT, FORMULA_ID, LIMIT_AMOUNT, TENANT_ID
+    </sql>
+
+</mapper>

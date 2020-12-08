@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.settle.dao.SettleSiminnRuleMapper">
+  <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.settle.entity.SettleSiminnRule">
+    <constructor>
+      <idArg column="ITEM_CODE" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="CHARGE_FEE" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="CHARGE_MEASURE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ITEM_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ITEM_MEASURE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TAX_RATE" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="EFFECTIVE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="EXPIRE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ITEM_CODE, CHARGE_FEE, CHARGE_MEASURE, ITEM_NAME, ITEM_MEASURE, TAX_RATE, CREATE_TIME, 
+    EFFECTIVE_TIME, EXPIRE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from settle_siminn_rule
+    where ITEM_CODE = #{itemCode,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from settle_siminn_rule
+    where ITEM_CODE = #{itemCode,jdbcType=BIGINT}
+  </delete>
+<!--  <insert id="insert" parameterType="com.cmit.mvne.billing.settle.entity.SettleSiminnRule">-->
+<!--    insert into settle_siminn_rule (ITEM_CODE, CHARGE_FEE, CHARGE_MEASURE, -->
+<!--      ITEM_NAME, ITEM_MEASURE, TAX_RATE, -->
+<!--      CREATE_TIME, EFFECTIVE_TIME, EXPIRE_TIME-->
+<!--      )-->
+<!--    values (#{itemCode,jdbcType=BIGINT}, #{chargeFee,jdbcType=DECIMAL}, #{chargeMeasure,jdbcType=VARCHAR}, -->
+<!--      #{itemName,jdbcType=VARCHAR}, #{itemMeasure,jdbcType=VARCHAR}, #{taxRate,jdbcType=DECIMAL}, -->
+<!--      #{createTime,jdbcType=TIMESTAMP}, #{effectiveTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP}-->
+<!--      )-->
+<!--  </insert>-->
+  <insert id="insertSelective" parameterType="com.cmit.mvne.billing.settle.entity.SettleSiminnRule">
+    insert into settle_siminn_rule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemCode != null">
+        ITEM_CODE,
+      </if>
+      <if test="chargeFee != null">
+        CHARGE_FEE,
+      </if>
+      <if test="chargeMeasure != null">
+        CHARGE_MEASURE,
+      </if>
+      <if test="itemName != null">
+        ITEM_NAME,
+      </if>
+      <if test="itemMeasure != null">
+        ITEM_MEASURE,
+      </if>
+      <if test="taxRate != null">
+        TAX_RATE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="effectiveTime != null">
+        EFFECTIVE_TIME,
+      </if>
+      <if test="expireTime != null">
+        EXPIRE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemCode != null">
+        #{itemCode,jdbcType=BIGINT},
+      </if>
+      <if test="chargeFee != null">
+        #{chargeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="chargeMeasure != null">
+        #{chargeMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemMeasure != null">
+        #{itemMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="taxRate != null">
+        #{taxRate,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectiveTime != null">
+        #{effectiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cmit.mvne.billing.settle.entity.SettleSiminnRule">
+    update settle_siminn_rule
+    <set>
+      <if test="chargeFee != null">
+        CHARGE_FEE = #{chargeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="chargeMeasure != null">
+        CHARGE_MEASURE = #{chargeMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null">
+        ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemMeasure != null">
+        ITEM_MEASURE = #{itemMeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="taxRate != null">
+        TAX_RATE = #{taxRate,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectiveTime != null">
+        EFFECTIVE_TIME = #{effectiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null">
+        EXPIRE_TIME = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ITEM_CODE = #{itemCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cmit.mvne.billing.settle.entity.SettleSiminnRule">
+    update settle_siminn_rule
+    set CHARGE_FEE = #{chargeFee,jdbcType=DECIMAL},
+      CHARGE_MEASURE = #{chargeMeasure,jdbcType=VARCHAR},
+      ITEM_NAME = #{itemName,jdbcType=VARCHAR},
+      ITEM_MEASURE = #{itemMeasure,jdbcType=VARCHAR},
+      TAX_RATE = #{taxRate,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      EFFECTIVE_TIME = #{effectiveTime,jdbcType=TIMESTAMP},
+      EXPIRE_TIME = #{expireTime,jdbcType=TIMESTAMP}
+    where ITEM_CODE = #{itemCode,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="selectNotExpireByItemName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from settle_siminn_rule
+    where ITEM_NAME = #{itemName,jdbcType=VARCHAR}
+    and now() &gt; EFFECTIVE_TIME and EXPIRE_TIME &gt; now()
+    order by CREATE_TIME
+  </select>
+</mapper>

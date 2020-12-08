@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.PmCompositeOfferPriceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.PmCompositeOfferPrice">
+        <id column="PRICING_PLAN_ID" property="pricingPlanId" />
+        <result column="PRICE_ID" property="priceId" />
+        <result column="BILLING_TYPE" property="billingType" />
+        <result column="OFFER_STS" property="offerSts" />
+        <result column="VALID_DATE" property="validDate" />
+        <result column="EXPIRE_DATE" property="expireDate" />
+        <result column="TENANT_ID" property="tenantId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        PRICING_PLAN_ID, PRICE_ID, BILLING_TYPE, OFFER_STS, VALID_DATE, EXPIRE_DATE, TENANT_ID
+    </sql>
+
+</mapper>

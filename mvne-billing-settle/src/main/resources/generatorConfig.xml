@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+     <classPathEntry location="C:\Users\zengxf02\.m2\repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>
+<!--    <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" />-->
+
+    <context id="DB2Tables" targetRuntime="MyBatis3"  defaultModelType="flat">
+
+<!--        <property name="beginningDelimiter" value="`"/>-->
+<!--        <property name="endingDelimiter" value="`"/>-->
+<!--        <property name="javaFileEncoding" value="UTF-8"/>-->
+
+        <!--optional,指在创建class时，对注释进行控制-->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/billing"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.cmit.mvne.billing.settle.entity" targetProject="src/main/java">
+            <!-- 是否允许子包 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否对modal添加构造函数 -->
+            <property name="constructorBased" value="true"/>
+            <!-- 是否清理从数据库中查询出的字符串左右两边的空白字符 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 建立modal对象是否不可改变 即生成的modal对象不会有setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources">
+            <!-- 针对数据库的一个配置，是否把 schema 作为字包名 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.cmit.mvne.billing.settle.dao"  targetProject="src/main/java">
+            <!-- 针对 oracle 数据库的一个配置，是否把 schema 作为字包名 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+<!--        <table schema="DB2ADMIN" tableName="ALLTYPES" domainObjectName="Customer" >-->
+<!--            <property name="useActualColumnNames" value="true"/>-->
+<!--            <generatedKey column="ID" sqlStatement="DB2" identity="true" />-->
+<!--            <columnOverride column="DATE_FIELD" property="startDate" />-->
+<!--            <ignoreColumn column="FRED" />-->
+<!--            <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />-->
+<!--        </table>-->
+
+        <!-- tableName是数据库中的表名，domainObjectName是生成的JAVA模型名，后面的参数不用改，要生成更多的表就在下面继续加table标签 -->
+<!--        <table tableName="cdr_gprs_settle" domainObjectName="CdrGprsSettle"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <generatedKey column="ID" sqlStatement="MySql" identity="true" />-->
+<!--        </table>-->
+<!--        <table tableName="cdr_gsm_settle" domainObjectName="CdrGsmSettle"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <generatedKey column="ID" sqlStatement="MySql" identity="true" />-->
+<!--        </table>-->
+<!--        <table tableName="cdr_mms_settle" domainObjectName="CdrMmsSettle"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <generatedKey column="ID" sqlStatement="MySql" identity="true" />-->
+<!--        </table>-->
+<!--        <table tableName="cdr_sms_settle" domainObjectName="CdrSmsSettle"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <generatedKey column="ID" sqlStatement="MySql" identity="true" />-->
+<!--        </table>-->
+<!--        <table tableName="settle_cdr_gprs" domainObjectName="SettleCdrGprs"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <generatedKey column="ID" sqlStatement="MySql" identity="true" />-->
+<!--        </table>-->
+        <table tableName="settle_cdr_gprs_error" domainObjectName="SettleCdrGprsError"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true" />
+        </table>
+<!--        <table tableName="settle_cdr_mms" domainObjectName="SettleCdrMms"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <generatedKey column="ID" sqlStatement="MySql" identity="true" />-->
+<!--        </table>-->
+        <table tableName="settle_cdr_mms_error" domainObjectName="SettleCdrMmsError"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true" />
+        </table>
+<!--        <table tableName="settle_cdr_sms" domainObjectName="SettleCdrSms"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <generatedKey column="ID" sqlStatement="MySql" identity="true" />-->
+<!--        </table>-->
+        <table tableName="settle_cdr_sms_error" domainObjectName="SettleCdrSmsError"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="ID" sqlStatement="MySql" identity="true" />
+        </table>
+<!--        <table tableName="settle_siminn_rule" domainObjectName="SettleSiminnRule"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <generatedKey column="ID" sqlStatement="MySql" identity="true" />-->
+<!--        </table>-->
+<!--        <table tableName="settle_siminn_sum_day" domainObjectName="SettleSiminnSumDay"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <generatedKey column="ID" sqlStatement="MySql" identity="true" />-->
+<!--        </table>-->
+<!--        <table tableName="settle_siminn_sum_month" domainObjectName="SettleSiminnSumMonth"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--            <generatedKey column="ID" sqlStatement="MySql" identity="true" />-->
+<!--        </table>-->
+<!--                <table tableName="bd_operator_code" domainObjectName="BdOperatorCode"-->
+<!--                       enableCountByExample="false" enableUpdateByExample="false"-->
+<!--                       enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--                       selectByExampleQueryId="false">-->
+<!--                    <generatedKey column="ID" sqlStatement="MySql" identity="true" />-->
+<!--                </table>-->
+
+
+    </context>
+</generatorConfiguration>

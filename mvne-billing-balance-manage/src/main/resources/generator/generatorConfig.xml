@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" 
+                       "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<classPathEntry
+		location="D:\Program Files\Repository\mysql\mysql-connector-java\5.1.43\mysql-connector-java-5.1.43.jar" />
+	<context id="MySqlContext" targetRuntime="MyBatis3Simple"
+		defaultModelType="flat">
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+		<property name="javaFileEncoding" value="UTF-8" />
+		<commentGenerator>
+			<property name="suppressAllComments" value="false" />
+			<property name="suppressDate" value="true" />
+			<property name="addRemarkComments" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://192.168.127.50:3306/mvne_billing?serverTimezone=UTC"
+			userId="mvnedba" password="kfcs@1009">
+		</jdbcConnection>
+
+		<javaModelGenerator targetPackage="com.cmsz.mvne.billing.rating.balance.manage.model"
+			targetProject="mvne-billing-balance-manage\src\main\java">
+			<property name="trimStrings" value="false" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="com.cmsz.mvne.billing.rating.balance.manage.mapper"
+			targetProject="mvne-billing-balance-manage\src\main\resources" />
+
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.cmsz.mvne.billing.rating.balance.manage.mapper"
+			targetProject="mvne-billing-balance-manage\src\main\java" />
+
+
+
+	
+		<table tableName="balance_fee">
+		</table>
+
+		<!-- <table tableName="PM_PRODUCT_OFFERING"> </table> <table tableName="PM_PRICING_PLAN"> 
+			</table> <table tableName="PM_PRICING_PLAN"> </table> <table tableName="PM_COMPONENT_PRODOFFER_PRICE"> 
+			</table> <table tableName="PM_COMPOSITE_OFFER_PRICE"> </table> <table tableName="free_res"> 
+			</table> <table tableName="rating_rate"> </table> <table tableName="pm_price_event"> 
+			</table> <table tableName="pm_expr_vs_item"> </table> -->
+	</context>
+</generatorConfiguration>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.preparation.dao.CdrErrorHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.preparation.entity.CdrErrorHistory">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="ORIGIN_FILE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LINE_NUMBER" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="ERROR_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="STATUS" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="RECEIVE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="REDO_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cmit.mvne.billing.preparation.entity.CdrErrorHistory">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="ORIGIN_FILE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LINE_NUMBER" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="ERROR_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="STATUS" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="RECEIVE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="CREATE_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="REDO_TIME" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="CDR_DETAIL" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ORIGIN_FILE, LINE_NUMBER, ERROR_CODE, STATUS, RECEIVE_TIME, CREATE_TIME, REDO_TIME
+  </sql>
+  <sql id="Blob_Column_List">
+    CDR_DETAIL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cdr_error_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cdr_error_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+<!--  <insert id="insert" parameterType="com.cmit.mvne.billing.preparation.entity.CdrErrorHistory">-->
+<!--    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">-->
+<!--      SELECT LAST_INSERT_ID()-->
+<!--    </selectKey>-->
+<!--    insert into cdr_error_history (ORIGIN_FILE, LINE_NUMBER, ERROR_CODE, -->
+<!--      STATUS, RECEIVE_TIME, CREATE_TIME, -->
+<!--      REDO_TIME, CDR_DETAIL)-->
+<!--    values (#{originFile,jdbcType=VARCHAR}, #{lineNumber,jdbcType=BIGINT}, #{errorCode,jdbcType=VARCHAR}, -->
+<!--      #{status,jdbcType=CHAR}, #{receiveTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, -->
+<!--      #{redoTime,jdbcType=TIMESTAMP}, #{cdrDetail,jdbcType=LONGVARCHAR})-->
+<!--  </insert>-->
+  <insert id="insertSelective" parameterType="com.cmit.mvne.billing.preparation.entity.CdrErrorHistory">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cdr_error_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="originFile != null">
+        ORIGIN_FILE,
+      </if>
+      <if test="lineNumber != null">
+        LINE_NUMBER,
+      </if>
+      <if test="errorCode != null">
+        ERROR_CODE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="receiveTime != null">
+        RECEIVE_TIME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="redoTime != null">
+        REDO_TIME,
+      </if>
+      <if test="cdrDetail != null">
+        CDR_DETAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="originFile != null">
+        #{originFile,jdbcType=VARCHAR},
+      </if>
+      <if test="lineNumber != null">
+        #{lineNumber,jdbcType=BIGINT},
+      </if>
+      <if test="errorCode != null">
+        #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="receiveTime != null">
+        #{receiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redoTime != null">
+        #{redoTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cdrDetail != null">
+        #{cdrDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cmit.mvne.billing.preparation.entity.CdrErrorHistory">
+    update cdr_error_history
+    <set>
+      <if test="originFile != null">
+        ORIGIN_FILE = #{originFile,jdbcType=VARCHAR},
+      </if>
+      <if test="lineNumber != null">
+        LINE_NUMBER = #{lineNumber,jdbcType=BIGINT},
+      </if>
+      <if test="errorCode != null">
+        ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="receiveTime != null">
+        RECEIVE_TIME = #{receiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redoTime != null">
+        REDO_TIME = #{redoTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cdrDetail != null">
+        CDR_DETAIL = #{cdrDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cmit.mvne.billing.preparation.entity.CdrErrorHistory">
+    update cdr_error_history
+    set ORIGIN_FILE = #{originFile,jdbcType=VARCHAR},
+      LINE_NUMBER = #{lineNumber,jdbcType=BIGINT},
+      ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      RECEIVE_TIME = #{receiveTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REDO_TIME = #{redoTime,jdbcType=TIMESTAMP},
+      CDR_DETAIL = #{cdrDetail,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cmit.mvne.billing.preparation.entity.CdrErrorHistory">
+    update cdr_error_history
+    set ORIGIN_FILE = #{originFile,jdbcType=VARCHAR},
+      LINE_NUMBER = #{lineNumber,jdbcType=BIGINT},
+      ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      RECEIVE_TIME = #{receiveTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REDO_TIME = #{redoTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

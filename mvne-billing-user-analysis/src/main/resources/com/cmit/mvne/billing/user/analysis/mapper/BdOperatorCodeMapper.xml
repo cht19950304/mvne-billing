@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.BdOperatorCodeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.BdOperatorCode">
+        <id column="ID" property="id" />
+        <result column="COUNTRY_INITIALS" property="countryInitials" />
+        <result column="COUNTRY_NAME" property="countryName" />
+        <result column="COUNTRY_NAME_CN" property="countryNameCn" />
+        <result column="OPERATOR_CODE" property="operatorCode" />
+        <result column="OPERATOR_NAME" property="operatorName" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="UPDATE_TIME" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        ID, COUNTRY_INITIALS, COUNTRY_NAME, COUNTRY_NAME_CN, OPERATOR_CODE, OPERATOR_NAME, CREATE_TIME, UPDATE_TIME
+    </sql>
+
+    <select id="selectByOperCodeInfo" resultType="java.lang.String">
+        select COUNTRY_NAME from bd_operator_code where OPERATOR_CODE=#{operatorCode}
+    </select>
+
+</mapper>

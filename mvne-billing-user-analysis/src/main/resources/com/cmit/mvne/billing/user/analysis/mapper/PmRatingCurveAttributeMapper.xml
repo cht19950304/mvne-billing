@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.PmRatingCurveAttributeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.PmRatingCurveAttribute">
+        <id column="CURVE_ATTRIBUTE_ID" property="curveAttributeId" />
+        <result column="NAME" property="name" />
+        <result column="CYCLE_UNIT" property="cycleUnit" />
+        <result column="PRECISION_ROUND" property="precisionRound" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="CYCLE_UNIT_FLAG" property="cycleUnitFlag" />
+        <result column="TENANT_ID" property="tenantId" />
+        <result column="MEASURE_ID" property="measureId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        CURVE_ATTRIBUTE_ID, NAME, CYCLE_UNIT, PRECISION_ROUND, DESCRIPTION, CYCLE_UNIT_FLAG, TENANT_ID, MEASURE_ID
+    </sql>
+
+</mapper>

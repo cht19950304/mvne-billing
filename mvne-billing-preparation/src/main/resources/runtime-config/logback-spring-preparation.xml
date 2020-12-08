@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<contextName>mvne-billing-preparation</contextName>
+
+	<springProperty scope="context" name="log.path" source="logging.path" defaultValue="../log"/>
+
+	<!--	<property name="log.path" value="log" />-->
+	<property name="log.maxHistory" value="30" />
+	<property name="log.totalSizeCap" value="1GB"/>
+	<property name="log.colorPattern" value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %yellow(%thread) %green(%logger) %msg%n"/>
+	<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5level %thread %logger %msg%n"/>
+
+	<!--输出到控制台 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${log.colorPattern}</pattern>
+		</encoder>
+	</appender>
+
+	<!--按天生成日志 -->
+	<appender name="file_info"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${log.path}/info/mvne-billing-preparation.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<maxHistory>${log.maxHistory}</maxHistory>
+			<totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>TRACE</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<appender name="file_error"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${log.path}/error/mvne-billing-preparation.%d{yyyy-MM-dd}.log</FileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${log.pattern}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<root level="info">
+		<appender-ref ref="console" />
+		<appender-ref ref="file_info" />
+		<appender-ref ref="file_error" />
+	</root>
+
+<!--	<logger name="org.springframework.boot.autoconfigure.jdbc" level="debug"/>-->
+	<logger name="org.springframework.integration.endpoint.SourcePollingChannelAdapter" level="debug"/>
+<!--	<logger name="org.springframework.jdbc.core.JdbcTemplate" level="trace"/>-->
+	<!--	<logger name="com.zaxxer.hikari.HikariDataSource" level="trace"/>-->
+
+	<logger name="org.hibernate.SQL" level="debug"/>
+	<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace"/>
+
+
+
+
+</configuration>

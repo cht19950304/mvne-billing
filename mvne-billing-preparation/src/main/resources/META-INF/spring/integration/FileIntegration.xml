@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:file="http://www.springframework.org/schema/integration/file"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <file:inbound-channel-adapter id="filesIn"
+        directory="${process.inputPath}"
+        prevent-duplicates="false"
+        ignore-hidden="true"
+        filter="fileCompositeFileListFilter">
+        <int:poller id="filePoller"
+            fixed-rate="${process.fixedRate}"
+            task-executor="processExcutor"
+            max-messages-per-poll="${process.maxMessagesPerPoll}"
+            error-channel="processErrorChannel"/>
+<!--        <file:nio-locker/>-->
+    </file:inbound-channel-adapter>
+    <task:executor id="processExcutor" pool-size="4"/>
+<!--    <bean id="filePersistentAcceptOnceFilter" class="org.springframework.integration.file.filters.FileSystemPersistentAcceptOnceFileListFilter">-->
+<!--        <constructor-arg index="0" ref="filePropertiesPersistingMetadataStore"/>-->
+<!--        <constructor-arg index="1" value="process_"/>-->
+<!--        <property name="flushOnUpdate" value="true"/>-->
+<!--    </bean>-->
+
+
+    <!-- 文件处理组合过滤器 -->
+    <bean id="fileCompositeFileListFilter"
+          class="org.springframework.integration.file.filters.CompositeFileListFilter">
+        <constructor-arg>
+            <list>
+                <!--<bean id="filePersistentAcceptOnceFilter" class="org.springframework.integration.file.filters.FileSystemPersistentAcceptOnceFileListFilter">
+                    <constructor-arg index="0" ref="filePropertiesPersistingMetadataStore"/>
+                    <constructor-arg index="1" value="process_"/>
+                    <property name="flushOnUpdate" value="true"/>
+                </bean>-->
+                <bean class="org.springframework.integration.file.filters.RegexPatternFileListFilter">
+                    <constructor-arg value="${process.filename.regexp}"/>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean id="filePropertiesPersistingMetadataStore" class="org.springframework.integration.metadata.PropertiesPersistingMetadataStore">
+        <property name="baseDirectory" value="${process.path}"/>
+        <property name="fileName" value="file-metadata-store.properties"/>
+    </bean>
+
+    <int:service-activator input-channel="filesIn"
+                           output-channel="filesOut"
+                           ref="processHandler"
+                           method="handleFile"/>
+    <int:service-activator input-channel="processErrorChannel"
+                           output-channel="nullChannel"
+                           ref="processHandler"
+                           method="handleErrorMessage"/>
+    <bean id="processHandler" class="com.cmit.mvne.billing.preparation.handler.ProccessHandler"/>
+
+
+    <file:outbound-channel-adapter id="filesOut"
+        directory="${process.backupPath}"
+        delete-source-files="true"/>
+
+    <file:outbound-channel-adapter  id="writeToFileChannel"
+                                    directory-expression="headers['directory']"
+                                    mode="REPLACE"/>
+    <int:gateway id="fileWritingGateway" default-request-channel="writeToFileChannel" service-interface="com.cmit.mvne.billing.preparation.gateway.FileWritingGateway"/>
+
+
+
+
+</beans>

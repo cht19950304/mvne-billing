@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmit.mvne.billing.user.analysis.mapper.SysMeasureMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cmit.mvne.billing.user.analysis.entity.SysMeasure">
+        <id column="MEASURE_ID" property="measureId" />
+        <result column="MEASURE_TYPE_ID" property="measureTypeId" />
+        <result column="NAME" property="name" />
+        <result column="MEASURE_LEVEL" property="measureLevel" />
+        <result column="DESCRIPTION" property="description" />
+        <result column="PRECISION_FLAG" property="precisionFlag" />
+        <result column="IS_DISPLAY" property="isDisplay" />
+        <result column="TENANT_ID" property="tenantId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        MEASURE_ID, MEASURE_TYPE_ID, NAME, MEASURE_LEVEL, DESCRIPTION, PRECISION_FLAG, IS_DISPLAY, TENANT_ID
+    </sql>
+
+</mapper>
