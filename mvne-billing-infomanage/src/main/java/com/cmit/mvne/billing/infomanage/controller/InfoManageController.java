@@ -105,7 +105,7 @@ public class InfoManageController {
 				IProd iProd = new IProd(iProdDto);
 				//lockKey = "InfoManageKey:" + iOrdOrder.getMsisdn();
 				infoManageCrmServiceImpl.changeOffer(iOrdOrder,iProd);
-				creditControlService.CreditControlOfferSms(iOrdOrder,iProd);
+				//creditControlService.CreditControlOfferSms(iOrdOrder,iProd);
 				log.info("InfoManageController-changeOffer commit transaction success!");
 				//distributeLock.unlock(lockKey);
 				//log.info("InfoManageController-changeOffer unlock success! lockKey is {}",lockKey);
@@ -204,7 +204,7 @@ public class InfoManageController {
 				IOrdOrder iOrdOrder = new IOrdOrder(iOrdOrderDto);
 				//lockKey = "InfoManageKey:" + iOrdOrder.getMsisdn();
 				infoManageCrmServiceImpl.recharge(iOrdOrder);
-				creditControlService.CreditControlChargeSms(iOrdOrder);
+				//creditControlService.CreditControlChargeSms(iOrdOrder);
 				log.info("InfoManageController-reCharge commit transaction success!");
 				//distributeLock.unlock(lockKey);
 				//log.info("InfoManageController-reCharge unlock success! lockKey is {}",lockKey);

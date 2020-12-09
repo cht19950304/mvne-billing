@@ -180,6 +180,40 @@ public class CreditControlServiceImpl  implements CreditControlService {
 
     }
 
+    @Override
+    public void CreditControlChangeCardSms(IOrdOrder iOrdOrder, IUser iUser) throws MvneException {
+        try{
+
+            //获取余额信息
+            ApsBalanceFee apsBalanceFee = apsBalanceFeeService.selectByUserId(iOrdOrder.getUserId());
+            log.info("CreditControlServiceImpl-CreditControlChangeCardSms apsBalanceFee is {}",apsBalanceFee);
+            if ( apsBalanceFee == null ){
+                log.error("CreditControlServiceImpl-CreditControlChangeCardSms apsBalanceFee is null !" );
+                throw new MvneException(MYSQL_SELECT_FAILED_CODE,"CreditControlServiceImpl-CreditControlChangeCardSms apsBalanceFee is null !");
+            }
+            //最新余额，单位为欧分，需转换为欧元
+            BigDecimal balanceFeeF = apsBalanceFee.getRemainFee();
+            BigDecimal balanceFeeY = balanceFeeF.divide(new BigDecimal(100));
+            log.info("CreditControlServiceImpl-CreditControlChangeCardSms balanceFeeF is {} , balanceFeeY is {}",balanceFeeF,balanceFeeY);
+
+            log.info("CreditControlServiceImpl-CreditControlChangeCardSms user balanceFeeY is {} ",balanceFeeY);
+            log.info("CreditControlServiceImpl-CreditControlChangeCardSms send number is {} , balanceFee is {} , userDetail is {} ",iOrdOrder.getMsisdn(),balanceFeeY,iUser.getUserStatus());
+
+            if ( iUser.getUserStatus().equals("03")  && balanceFeeY.compareTo(new BigDecimal(0)) == 0){
+                //如果为匿名补换卡，余额为0，发送停机信息
+                String sendText2 = "Dear user, your number has been changecard successfully, but the balance of your number is currently too low , "+"Current balance: "+balanceFeeY+" euros.";
+                sendSmsGateway(iOrdOrder.getMsisdn(),sendText2,"1","3");
+                log.info("CreditControlServiceImpl-CreditControlChangeCardSms sendSmsGateway sendText2 is {} , operation is {} , reason is {}",sendText2,1,3);
+            }
+        }catch (Exception e){
+            if ( e instanceof MvneException ){
+                throw new MvneException(((MvneException) e).getErrCode(),((MvneException) e).getErrDesc());
+            } else {
+                throw new MvneException(SENT_SMS_CREDIT_FAILED_CODE,StringUtils.getExceptionText(e).substring(0, 1023));
+            }
+        }
+    }
+
     private void sendSmsGateway(String msisdn, String sendText, String operation,String reason) throws MvneException
     {
 
@@ -192,6 +226,12 @@ public class CreditControlServiceImpl  implements CreditControlService {
         MvneInfoManageResponse mvneInfoManageResponse = creditControlClient.userStart(smsGatewayDto);
         log.info("CreditControlServiceImpl-sendSmsGateway send credit control send smsGatewayDto is {}",smsGatewayDto);
         log.info("CreditControlServiceImpl-sendSmsGateway send credit control start response : {}",mvneInfoManageResponse);
-
+        log.info("mvneInfoManageResponse code is {} ",mvneInfoManageResponse.get("code"));
+        if ( mvneInfoManageResponse.get("code").equals(200)){
+            log.info("CreditControlServiceImpl-sendSmsGateway send credit control success !");
+        }else {
+            log.info("CreditControlServiceImpl-sendSmsGateway send credit control failed !");
+            throw new MvneException(SENT_SMS_CREDIT_FAILED_CODE,mvneInfoManageResponse.get("message").toString());
+        }
     }
 }

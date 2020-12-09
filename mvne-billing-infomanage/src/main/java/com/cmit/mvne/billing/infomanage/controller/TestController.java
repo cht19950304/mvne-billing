@@ -92,4 +92,10 @@ public class TestController {
         }
         return false;
     }
+
+    @RequestMapping(value = "hello",method = RequestMethod.GET)
+    String test(){
+            return "Hello";
+    }
+
 }

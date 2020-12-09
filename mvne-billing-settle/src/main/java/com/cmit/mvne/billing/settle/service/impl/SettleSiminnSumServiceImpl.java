@@ -69,7 +69,9 @@ public class SettleSiminnSumServiceImpl implements SettleSiminnSumService {
     public List<SiminnSumMonthFeeDTO> getSettleSiminnSumFee(String startMonth, String endMonth) {
 
         List<SiminnSumMonthFeeDTO> siminnSumMonthFeeDTOList = new ArrayList<>();
+
         List<String> monthList = getMonthList(startMonth, endMonth);
+
         for(String month : monthList) {
             List<SettleSiminnSumMonth> siminnSumMonthList = settleSiminnSumMonthMapper.selectByInvoicingPeriod(month);
 
@@ -135,6 +137,7 @@ public class SettleSiminnSumServiceImpl implements SettleSiminnSumService {
     public List<SiminnSumAmountDTO> getSettleSiminnSumMonth(String startMonth, String endMonth) {
 
         List<SiminnSumAmountDTO> siminnSumAmountDTOList = new ArrayList<>();
+
         List<String> monthList = getMonthList(startMonth, endMonth);
         for(String month : monthList) {
             List<SettleSiminnSumMonth> siminnSumMonthList = settleSiminnSumMonthMapper.selectByInvoicingPeriod(month);

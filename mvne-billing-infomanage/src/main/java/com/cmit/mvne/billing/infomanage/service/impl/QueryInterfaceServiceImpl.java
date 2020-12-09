@@ -140,10 +140,11 @@ public class QueryInterfaceServiceImpl implements QueryInterfaceService {
                             }
                             Date productOfferDate = apsFreeResList.get(0).getValidDate();
                             Date productExpireDate = apsFreeResList.get(0).getExpireDate();
-                            SimpleDateFormat sdt = new SimpleDateFormat("yyyyMMdd");
+                            //SimpleDateFormat sdt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             log.info("QueryInterfaceServiceImpl-queryUserOfferInfo select apsFreeRes amountGB is {} , remainMB is {} , productOfferDate is {} , productExpireDate is {}",amountGB,remainMB,productOfferDate,productExpireDate);
 
-                            ProductMsg productMsgObject = new ProductMsg(productName,amountGB,remainMB,sdt.parse(sdt.format(productOfferDate)).getTime(),sdt.parse(sdt.format(productExpireDate)).getTime());
+                            //ProductMsg productMsgObject = new ProductMsg(productName,amountGB,remainMB,sdt.parse(sdt.format(productOfferDate)).getTime(),sdt.parse(sdt.format(productExpireDate)).getTime());
+                            ProductMsg productMsgObject = new ProductMsg(productName,amountGB,remainMB,productOfferDate.getTime(),productExpireDate.getTime());
                             productMsgList.add(productMsgObject.toJsonString());
                         }else {
                             log.error("QueryInterfaceServiceImpl-queryUserOfferInfo select apsFreeResList size is {}",apsFreeResList.size());

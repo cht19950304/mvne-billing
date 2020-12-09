@@ -6,6 +6,7 @@ package com.cmit.mvne.billing.infomanage.service;
 import java.util.Date;
 import java.util.List;
 
+import com.cmit.mvne.billing.infomanage.remote.service.CreditControlService;
 import com.cmit.mvne.billing.user.analysis.service.CmUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.QueryTimeoutException;
@@ -35,11 +36,15 @@ public class SyncChangeCardOrder  {
     private CmUserDetailService cmUserDetailService;
     @Autowired
     private IOrdOrderService iOrdOrderService;
+    @Autowired
+    private CreditControlService creditControlService;
 
     @Transactional(rollbackFor = Exception.class)
     public void sync(IOrdOrder iOrdOrder,IUser iUser) throws MvneException{
         try {
             syncDBRedis(iOrdOrder,iUser);
+            //查询余额，如果余额为0，则调用信控接口停机
+            creditControlService.CreditControlChangeCardSms(iOrdOrder,iUser);
         }catch(Exception e) {
             log.error("SyncChangeCardOrder-sync error! order is {}",iOrdOrder.getOrderId());
             log.error("SyncChangeCardOrder-sync iOrdOrder is : {} , error message : {}" , iOrdOrder.toString() , StringUtils.getExceptionText(e).substring(0, 1023));
@@ -60,12 +65,10 @@ public class SyncChangeCardOrder  {
         log.info("SyncChangeCardOrder-sync-syncDBRedis update start ! iUser is : {}",iUser.getUserId());
         //插入订单表
         iOrdOrderService.insert(iOrdOrder);
-        //更新IMSI，修改用户状态为05
+        //更新IMSI，修改用户状态
         List<CmUserDetail> cmUserDetailList= cmUserDetailService.updateChangeCard(iUser.getMsisdn(),new CmUserDetail(iUser));
         log.info("SyncChangeCardOrder-sync-syncDBRedis update after cmUserDetailList is {}",cmUserDetailList);
         if ( cmUserDetailList.size() > 0 ){
-            //插入最新用户信息
-            //cmUserDetailService.insert(iUser.getMsisdn(),new CmUserDetail(iUser));
             log.info("SyncChangeCardOrder-sync-syncDBRedis insert CmUserDetail ! CmUserDetail is : {}",new CmUserDetail(iUser));
         }else {
             log.error("SyncChangeCardOrder-sync-syncDBRedis update expireDate failed! userId is {}",iUser.getUserId());

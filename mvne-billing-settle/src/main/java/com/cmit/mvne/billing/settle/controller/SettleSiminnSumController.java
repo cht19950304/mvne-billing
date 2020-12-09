@@ -1,6 +1,8 @@
 package com.cmit.mvne.billing.settle.controller;
 
 import com.alibaba.excel.EasyExcel;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmit.mvne.billing.settle.common.ServerResponse;
 import com.cmit.mvne.billing.settle.entity.SettleSiminnSumDay;
 import com.cmit.mvne.billing.settle.entity.SettleSiminnSumMonth;
@@ -8,6 +10,7 @@ import com.cmit.mvne.billing.settle.entity.dto.SiminnSumAmountDTO;
 import com.cmit.mvne.billing.settle.entity.dto.SiminnSumMonthFeeDTO;
 import com.cmit.mvne.billing.settle.service.SettleSiminnSumService;
 import com.cmit.mvne.billing.settle.util.DateTimeUtil;
+import com.cmit.mvne.billing.settle.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,6 +24,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,10 +44,16 @@ public class SettleSiminnSumController {
     private SettleSiminnSumService settleSiminnSumService;
 
     @GetMapping("siminnSumFee")
-    public ServerResponse<List<SiminnSumMonthFeeDTO>> getSettleSiminnSumFee(@RequestParam String startMonth, @RequestParam String endMonth) {
-        log.info("Invoking /settle/siminnSumFee interface ,params include startMonth:{}, endMonth{}", startMonth, endMonth);
+    public ServerResponse<IPage<SiminnSumMonthFeeDTO>> getSettleSiminnSumFee(@RequestParam String startMonth, @RequestParam String endMonth,@RequestParam Integer page, @RequestParam Integer size) {
+        log.info("Invoking /settle/siminnSumFee interface ,params include startMonth:{}, endMonth{}, page:{}, size:{}", startMonth, endMonth,page,size);
         List<SiminnSumMonthFeeDTO> siminnSumMonthFeeDTOList = settleSiminnSumService.getSettleSiminnSumFee(startMonth, endMonth);
-        return ServerResponse.createSuccess(siminnSumMonthFeeDTOList);
+        //分页输出
+        PageUtil<SiminnSumMonthFeeDTO> pageUtil = new PageUtil<>();
+        List<SiminnSumMonthFeeDTO> siminnSumMonthFeeDTOPageList = pageUtil.startPage(siminnSumMonthFeeDTOList,page,size);
+        IPage<SiminnSumMonthFeeDTO> siminnSumMonthFeeDTOPage = new Page<>(page,size,siminnSumMonthFeeDTOList.size());
+        siminnSumMonthFeeDTOPage.setRecords(siminnSumMonthFeeDTOPageList);
+        return ServerResponse.createSuccess(siminnSumMonthFeeDTOPage);
+        //return ServerResponse.createSuccess(siminnSumMonthFeeDTOList);
     }
 
     @GetMapping("siminnSumFee/excel")
@@ -60,10 +70,15 @@ public class SettleSiminnSumController {
     }
 
     @GetMapping("siminnSumAmount")
-    public ServerResponse<List<SiminnSumAmountDTO>> getSettleSiminnSumAmount(@RequestParam String startMonth, @RequestParam String endMonth) {
+    public ServerResponse<IPage<SiminnSumAmountDTO>> getSettleSiminnSumAmount(@RequestParam String startMonth, @RequestParam String endMonth, @RequestParam Integer page, @RequestParam Integer size) {
         log.info("Invoking /settle/siminnSumAmount interface, params include startMonth:{}, endMonth:{}", startMonth, endMonth);
         List<SiminnSumAmountDTO> siminnSumAmountDTOList = settleSiminnSumService.getSettleSiminnSumMonth(startMonth, endMonth);
-        return ServerResponse.createSuccess(siminnSumAmountDTOList);
+        //分页输出
+        PageUtil<SiminnSumAmountDTO> pageUtil = new PageUtil<>();
+        List<SiminnSumAmountDTO>  siminnSumAmountDTOPageList = pageUtil.startPage(siminnSumAmountDTOList,page,size);
+        IPage<SiminnSumAmountDTO> siminnSumAmountDTOPage = new Page<>(page,size,siminnSumAmountDTOList.size());
+        siminnSumAmountDTOPage.setRecords(siminnSumAmountDTOPageList);
+        return ServerResponse.createSuccess(siminnSumAmountDTOPage);
     }
 
     @GetMapping("siminnSumAmount/excel")
@@ -81,10 +96,23 @@ public class SettleSiminnSumController {
     }
 
     @GetMapping("siminnSumDayAmount")
-    public ServerResponse<List<SiminnSumAmountDTO>> getSettleSiminnSumDayAmount(@RequestParam Long startTime, @RequestParam Long endTime) {
+    public ServerResponse<IPage<SiminnSumAmountDTO>> getSettleSiminnSumDayAmount(@RequestParam Long startTime, @RequestParam Long endTime, @RequestParam Integer page, @RequestParam Integer size) {
         log.info("Invoking /settle/siminnSumDayAmount interface, params include startTime:{}, endTime:{}", startTime, endTime);
         List<SiminnSumAmountDTO> siminnSumAmountDTOList = settleSiminnSumService.getSettleSiminnSumDay(startTime, endTime);
-        return ServerResponse.createSuccess(siminnSumAmountDTOList);
+
+        if ( page == 0 && size == 0 ){
+            IPage<SiminnSumAmountDTO> siminnSumAmountDTOPage = new Page<>(1,siminnSumAmountDTOList.size(),siminnSumAmountDTOList.size());
+            siminnSumAmountDTOPage.setRecords(siminnSumAmountDTOList);
+            return ServerResponse.createSuccess(siminnSumAmountDTOPage);
+        }else {
+            //分页输出
+            PageUtil<SiminnSumAmountDTO> pageUtil = new PageUtil<>();
+            List<SiminnSumAmountDTO> siminnSumAmountDTOPageList = pageUtil.startPage(siminnSumAmountDTOList,page,size);
+            IPage<SiminnSumAmountDTO> siminnSumAmountDTOPage = new Page<>(page,size,siminnSumAmountDTOList.size());
+            siminnSumAmountDTOPage.setRecords(siminnSumAmountDTOPageList);
+            return ServerResponse.createSuccess(siminnSumAmountDTOPage);
+        }
+
     }
 
     @GetMapping("siminnSumDayAmount/excel")

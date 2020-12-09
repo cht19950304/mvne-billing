@@ -3,6 +3,7 @@ package com.cmit.mvne.billing.infomanage.service;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.cmit.mvne.billing.infomanage.common.MvneException;
 import com.cmit.mvne.billing.infomanage.entity.IOrdOrder;
+import com.cmit.mvne.billing.infomanage.remote.service.CreditControlService;
 import com.cmit.mvne.billing.infomanage.util.StringUtils;
 import com.cmit.mvne.billing.user.analysis.entity.*;
 import com.cmit.mvne.billing.user.analysis.service.ApsBalanceFeeService;
@@ -42,6 +43,8 @@ public class SyncChangeOfferOrder  {
     private ApsBalanceFeeService apsBalanceFeeService;
     @Autowired
     private IOrdOrderService iOrdOrderService;
+    @Autowired
+    private CreditControlService creditControlService;
 
     final int RETRY_TIME = 3;
 
@@ -51,8 +54,8 @@ public class SyncChangeOfferOrder  {
     @Transactional(rollbackFor = Exception.class)
     public void sync(IOrdOrder iOrdOrder, IProd iProd) throws MvneException{
         try {
-            //syncDB(iUserList, iProdList);
             syncDBRedis(iOrdOrder,iProd);
+            creditControlService.CreditControlOfferSms(iOrdOrder,iProd);
         } catch (Exception e) {
             log.error("SyncChangeOfferOrder-sync error! order is {}",iOrdOrder.getOrderId());
             log.error("SyncChangeOfferOrder-sync iOrdOrder is : {} , error message : {}" , iOrdOrder.toString() , StringUtils.getExceptionText(e).substring(0, 1023));

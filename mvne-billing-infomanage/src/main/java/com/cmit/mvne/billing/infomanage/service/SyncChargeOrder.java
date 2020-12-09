@@ -3,6 +3,7 @@ package com.cmit.mvne.billing.infomanage.service;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.cmit.mvne.billing.infomanage.common.MvneException;
 import com.cmit.mvne.billing.infomanage.entity.IOrdOrder;
+import com.cmit.mvne.billing.infomanage.remote.service.CreditControlService;
 import com.cmit.mvne.billing.infomanage.util.StringUtils;
 import com.cmit.mvne.billing.user.analysis.entity.ApsBalanceFee;
 import com.cmit.mvne.billing.user.analysis.service.ApsBalanceFeeService;
@@ -32,6 +33,8 @@ public class SyncChargeOrder  {
     private ApsBalanceFeeService apsBalanceFeeService;
     @Autowired
     private IOrdOrderService iOrdOrderService;
+    @Autowired
+    private CreditControlService creditControlService;
 
     final int RETRY_TIME = 3;
 
@@ -43,6 +46,7 @@ public class SyncChargeOrder  {
         //同步DB
         try {
             syncDB(iOrdOrder);
+            creditControlService.CreditControlChargeSms(iOrdOrder);
         } catch (Exception e) {
             log.error("SyncChargeOrder-sync error! order is {}",iOrdOrder.getOrderId());
             log.error("SyncChargeOrder-sync iOrdOrder is : {} , error message : {}" , iOrdOrder.toString() , StringUtils.getExceptionText(e).substring(0, 1023));
