@@ -16,7 +16,8 @@ public class ExportUserCdrInfo {
         private Date eventTimestamp;
         @ExcelProperty(value = "Place")
         private String location;
-        //private String apn;
+        @ExcelProperty(value = "Connection Mode")
+        private String apn;
         @ExcelProperty(value = "Duration(s)")
         private Integer eventDuration;
         @ExcelProperty(value = "Volume(kb)")
@@ -26,13 +27,13 @@ public class ExportUserCdrInfo {
         @ExcelProperty(value = "Actual Fee")
         private BigDecimal fee1;
 
-        public ExportUserCdrInfo(String msisdn,Date localEventTimestamp,Date eventTimestamp,String location,Integer eventDuration,BigDecimal totalVol,String resource,BigDecimal fee1)
+        public ExportUserCdrInfo(String msisdn,Date localEventTimestamp,Date eventTimestamp,String location,String apn,Integer eventDuration,BigDecimal totalVol,String resource,BigDecimal fee1)
         {
             this.msisdn = msisdn;
             this.localEventTimestamp = localEventTimestamp;
             this.eventTimestamp = eventTimestamp;
             this.location = location;
-            //this.apn = apn;
+            this.apn = apn;
             this.eventDuration = eventDuration;
             this.totalVol = totalVol;
             this.resource = resource;
