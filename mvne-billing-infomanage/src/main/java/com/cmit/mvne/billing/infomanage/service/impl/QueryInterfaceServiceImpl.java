@@ -350,8 +350,7 @@ public class QueryInterfaceServiceImpl implements QueryInterfaceService {
             }
             Date eventTimeStampDate = DateTimeUtil.strToDate(queryUserCdrInfoDto.getEventTimeStamp());
             ExportUserCdrInfo exportUserCdrInfo = new ExportUserCdrInfo(msisdn, queryUserCdrInfoDto.getLocalEventTimeStamp(),eventTimeStampDate,
-                    countryName, queryUserCdrInfoDto.getApn(), queryUserCdrInfoDto.getEventDuration(),
-                    totalVolKB, resources, queryUserCdrInfoDto.getFee1().divide(new BigDecimal(100)));
+                    countryName, queryUserCdrInfoDto.getEventDuration(), totalVolKB, resources, queryUserCdrInfoDto.getFee1().divide(new BigDecimal(100)));
             exportUserCdrInfoList.add(exportUserCdrInfo);
 
         }
