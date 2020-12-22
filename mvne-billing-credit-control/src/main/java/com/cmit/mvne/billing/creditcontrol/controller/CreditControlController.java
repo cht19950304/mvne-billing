@@ -135,6 +135,9 @@ public class CreditControlController {
 				creditControlSmsTempServiceImpl.deleteCreditControlSmsTemp(creditControlSms.getMsisdn(), "13");
 				creditControlSmsServcieImpl.createCreditControlSms(creditControlSms);
 			}
+			else {
+				return new MvneCrmResponse().fail().message("No such parameter");
+			}
 		}catch(Exception e) {
 			log.error("信控接收号码:"+smsGatewayDto.getMsisdn()+"的短信提醒请求失败",e);
 			return new MvneCrmResponse().fail().message("Credit control receive the sms request of:"
