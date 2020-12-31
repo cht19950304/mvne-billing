@@ -188,10 +188,10 @@ public class SettleSiminnSumServiceImpl implements SettleSiminnSumService {
             settleSumAmountDTO.setInvoicingPeriod(billDay);
             for(SettleSiminnSumDay settleSiminnSumDay : settleSiminnSumDayList) {
                 if(settleSiminnSumDay.getItemName().equals(SettleItem.DOMESTIC_DATA.name())) {
-                    settleSumAmountDTO.setDomesticDataAmount(settleSiminnSumDay.getTotalValue());
+                    settleSumAmountDTO.setDomesticDataAmount(settleSiminnSumDay.getTotalValue().divide(new BigDecimal("1024"), 2, RoundingMode.HALF_UP));
                 }
                 if(settleSiminnSumDay.getItemName().equals(SettleItem.INTERNATIONAL_ROAMING_DATA.name())) {
-                    settleSumAmountDTO.setRoamingDataAmount(settleSiminnSumDay.getTotalValue());
+                    settleSumAmountDTO.setRoamingDataAmount(settleSiminnSumDay.getTotalValue().divide(new BigDecimal("1024"), 2, RoundingMode.HALF_UP));
                 }
                 if(settleSiminnSumDay.getItemName().equals(SettleItem.DOMESTIC_VOICE.name())) {
                     settleSumAmountDTO.setDomesticVoiceAmount(settleSiminnSumDay.getTotalValue());

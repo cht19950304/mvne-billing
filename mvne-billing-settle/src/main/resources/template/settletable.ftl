@@ -37,7 +37,7 @@ CREATE TABLE `settle_cdr_gprs_${yyyyMMdd}`  (
 `FINISH_TIME` datetime(0) NULL DEFAULT NULL,
 PRIMARY KEY (`ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-DROP TABLE IF EXISTS `settle_cdr_mms_${yyyyMMdd}`;
+<#--DROP TABLE IF EXISTS `settle_cdr_mms_${yyyyMMdd}`;
 CREATE TABLE `settle_cdr_mms_${yyyyMMdd}`  (
 `ID` bigint(20) NOT NULL,
 `RECORD_TYPE` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'RecordType is the identifier to differentiate the service type',
@@ -75,8 +75,8 @@ CREATE TABLE `settle_cdr_mms_${yyyyMMdd}`  (
 `RECEIVE_TIME` datetime(0) NOT NULL,
 `FINISH_TIME` datetime(0) NULL DEFAULT NULL,
 PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-DROP TABLE IF EXISTS `settle_cdr_sms_${yyyyMMdd}`;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;-->
+<#--DROP TABLE IF EXISTS `settle_cdr_sms_${yyyyMMdd}`;
 CREATE TABLE `settle_cdr_sms_${yyyyMMdd}`  (
 `ID` bigint(20) NOT NULL,
 `RECORD_TYPE` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'RecordType is the identifier to differentiate the service type',
@@ -114,5 +114,5 @@ CREATE TABLE `settle_cdr_sms_${yyyyMMdd}`  (
 `RECEIVE_TIME` datetime(0) NOT NULL,
 `FINISH_TIME` datetime(0) NULL DEFAULT NULL,
 PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic-->
 
