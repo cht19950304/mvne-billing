@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class QueryUserCdrInfo {
     private String msisdn;
     private Long localEventTimestamp;
-    private Long eventTimestamp;
+    private String eventTimestamp;
     private String location;
     private String apn;
     private Integer eventDuration;
@@ -17,7 +17,7 @@ public class QueryUserCdrInfo {
     private String resource;
     private BigDecimal fee1;
 
-    public QueryUserCdrInfo(String msisdn,Long localEventTimestamp,Long eventTimestamp,String location,String apn,Integer eventDuration,BigDecimal totalVol,String resource,BigDecimal fee1)
+    public QueryUserCdrInfo(String msisdn,Long localEventTimestamp,String eventTimestamp,String location,String apn,Integer eventDuration,BigDecimal totalVol,String resource,BigDecimal fee1)
     {
         this.msisdn = msisdn;
         this.localEventTimestamp = localEventTimestamp;

@@ -299,8 +299,8 @@ public class QueryInterfaceServiceImpl implements QueryInterfaceService {
             } else {
                 resources = "in the bundle";
             }
-            Date eventTimeStampDate = DateTimeUtil.strToDate(queryUserCdrInfoDto.getEventTimeStamp());
-            QueryUserCdrInfo queryUserCdrInfo = new QueryUserCdrInfo(msisdn, queryUserCdrInfoDto.getLocalEventTimeStamp().getTime(),eventTimeStampDate.getTime(),
+            //Date eventTimeStampDate = DateTimeUtil.strToDate(queryUserCdrInfoDto.getEventTimeStamp());
+            QueryUserCdrInfo queryUserCdrInfo = new QueryUserCdrInfo(msisdn, queryUserCdrInfoDto.getLocalEventTimeStamp().getTime(),queryUserCdrInfoDto.getEventTimeStamp(),
                     countryName, queryUserCdrInfoDto.getApn(), queryUserCdrInfoDto.getEventDuration(),
                     totalVolKB, resources, queryUserCdrInfoDto.getFee1().divide(new BigDecimal(100)));
             queryUserCdrInfoList.add(queryUserCdrInfo);
@@ -348,8 +348,8 @@ public class QueryInterfaceServiceImpl implements QueryInterfaceService {
             } else {
                 resources = "in the bundle";
             }
-            Date eventTimeStampDate = DateTimeUtil.strToDate(queryUserCdrInfoDto.getEventTimeStamp());
-            ExportUserCdrInfo exportUserCdrInfo = new ExportUserCdrInfo(msisdn, queryUserCdrInfoDto.getLocalEventTimeStamp(),eventTimeStampDate,
+            //Date eventTimeStampDate = DateTimeUtil.strToDate(queryUserCdrInfoDto.getEventTimeStamp());
+            ExportUserCdrInfo exportUserCdrInfo = new ExportUserCdrInfo(msisdn, queryUserCdrInfoDto.getLocalEventTimeStamp(),queryUserCdrInfoDto.getEventTimeStamp(),
                     countryName,queryUserCdrInfoDto.getApn(), queryUserCdrInfoDto.getEventDuration(), totalVolKB, resources, queryUserCdrInfoDto.getFee1().divide(new BigDecimal(100)));
             exportUserCdrInfoList.add(exportUserCdrInfo);
 

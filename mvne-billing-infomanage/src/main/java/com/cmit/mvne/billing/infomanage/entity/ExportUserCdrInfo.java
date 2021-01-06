@@ -13,7 +13,7 @@ public class ExportUserCdrInfo {
         @ExcelProperty(value = "Call Event Start Time-icelandic")
         private Date localEventTimestamp;
         @ExcelProperty(value = "Call Event Start Time-Original")
-        private Date eventTimestamp;
+        private String eventTimestamp;
         @ExcelProperty(value = "Place")
         private String location;
         @ExcelProperty(value = "Connection Mode")
@@ -27,7 +27,7 @@ public class ExportUserCdrInfo {
         @ExcelProperty(value = "Actual Fee")
         private BigDecimal fee1;
 
-        public ExportUserCdrInfo(String msisdn,Date localEventTimestamp,Date eventTimestamp,String location,String apn,Integer eventDuration,BigDecimal totalVol,String resource,BigDecimal fee1)
+        public ExportUserCdrInfo(String msisdn,Date localEventTimestamp,String eventTimestamp,String location,String apn,Integer eventDuration,BigDecimal totalVol,String resource,BigDecimal fee1)
         {
             this.msisdn = msisdn;
             this.localEventTimestamp = localEventTimestamp;
