@@ -1,13 +1,17 @@
 package com.cmit.mvne.billing.preparation.controller;
 
 import com.cmit.mvne.billing.preparation.entity.BdOperatorCode;
+import com.cmit.mvne.billing.preparation.entity.CdrGprsRating;
 import com.cmit.mvne.billing.preparation.service.BdOperatorCodeService;
 import com.cmit.mvne.billing.preparation.service.CdrDupCheckService;
 import com.cmit.mvne.billing.preparation.service.impl.CdrDupCheckServiceImpl;
+import com.cmit.mvne.billing.preparation.util.DateTimeUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.instrument.Instrumentation;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/test")
+@Slf4j
 public class TestController {
     @Autowired
     private CdrDupCheckService cdrDupCheckService;
@@ -46,7 +51,10 @@ public class TestController {
     }
 
     @GetMapping("/size")
-    void size() {
-        
+    Date size() {
+        CdrGprsRating cdrGprsRating = new CdrGprsRating();
+        cdrGprsRating.setLocalEventTimeStamp(DateTimeUtil.strToDate("20201229050144", "+0000"));
+        log.info("Hello : '{}'", DateTimeUtil.strToDate("20201229050144", "+0000"));
+        return DateTimeUtil.strToDate("20201229050144", "+0000");
     }
 }

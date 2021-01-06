@@ -22,7 +22,7 @@ public class MvneBillingPreparationApplication {
 	public void init() {
 //		TimeZone.setDefault(TimeZone.getDefault());
 
-		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
+//		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
 	}
 
 	public static void main(String[] args) {

@@ -152,6 +152,8 @@ public class CdrParsingServiceImpl implements CdrParsingService {
             cdrGprsRating.setMsisdn(cdr[4]);
             cdrGprsRating.setImsi(cdr[5]);
             cdrGprsRating.setEventTimeStamp(cdr[6]);
+            log.info("Hello : '{}','{}'",cdr[6], cdr[13]);
+            log.info("Hello : '{}'", DateTimeUtil.strToDate(cdr[6], cdr[13]));
             cdrGprsRating.setLocalEventTimeStamp(DateTimeUtil.strToDate(cdr[6], cdr[13]));
             cdrGprsRating.setEventDuration(Integer.parseInt(cdr[7]));
             cdrGprsRating.setDownloadVol(new BigDecimal(cdr[8]));

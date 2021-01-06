@@ -16,6 +16,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -415,38 +420,18 @@ implements ICreditControlSmsService {
 	
 	//成功的返回值为“OK”
 		public String sendSmsByHttpPost(CreditControlSms creditControlSms) throws IOException {
-			URL url = new URL(pUrl);
-			HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-			httpCon.setConnectTimeout(5 * 1000);
-			// 设置连接超时时间
-			httpCon.setReadTimeout(30 * 1000);
-			//设置从主机读取数据超时（单位：毫秒）
-			httpCon.setDoOutput(true);
-			httpCon.setDoInput(true);
-			httpCon.setUseCaches(false);
-			httpCon.setRequestMethod("POST");
-			httpCon.setInstanceFollowRedirects(true);
-			httpCon.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			CloseableHttpClient httpclient = HttpClients.createDefault();
+			RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(3000)
+					.setSocketTimeout(3000).setConnectTimeout(3000).build();
 			String encodeInfo = URLEncoder.encode(creditControlSms.getText(), "ISO-8859-1");
-			//请求的参数，根据网关开发文档来组装 
-			String content = "L="+username+"&"+"P="+password+"&"+"msisdn="+"00"+creditControlSms.getMsisdn()
-			+"&"+"T="+encodeInfo;
-			byte[] postData = content.getBytes("ISO-8859-1");
-			httpCon.setRequestProperty("Content-Length", String.valueOf(postData.length));
-			httpCon.connect();
-			DataOutputStream out = new DataOutputStream(httpCon.getOutputStream());
-			out.write(postData, 0, postData.length);
-			out.flush();
-			out.close();
-			int responseCode = httpCon.getResponseCode();
-			log.info("给号码:"+creditControlSms.getMsisdn()+"发送短信的HTTP连接返回码为:"+responseCode);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
+			String url = pUrl + "?L=" + username + "&P=" + password + "&msisdn=00" + creditControlSms.getMsisdn() + "&T=" + encodeInfo;
 
-			reader.close();
-			String sRet = httpCon.getResponseMessage();
-			log.info("给号码:"+creditControlSms.getMsisdn()+"的短信的发送状态为:"+sRet);
-			httpCon.disconnect();
-			return sRet;
+			HttpPost httpPost = new HttpPost(url);
+			httpPost.setConfig(requestConfig);
+
+			CloseableHttpResponse response2 = httpclient.execute(httpPost);
+			log.info("给号码:"+creditControlSms.getMsisdn()+"的短信的发送状态为:"+response2.getStatusLine());
+			return "OK";
 		}
 
 	@Override

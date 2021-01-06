@@ -3,12 +3,32 @@
  */
 package com.cmit.mvne.billing.creditcontrol.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
+import com.alibaba.fastjson.JSONObject;
+import okhttp3.*;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
@@ -182,6 +202,89 @@ public class CreditControlController {
 			log.error("恢复定时任务出现异常:",e);
 			return new MvneCrmResponse().fail().message("恢复定时任务出现异常:"+e.getMessage());
 		}
+	}
+
+	@GetMapping("test")
+	@ResponseBody
+	public String myTest() throws IOException {
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(10000)
+				.setSocketTimeout(10000).setConnectTimeout(10000).build();
+
+		HttpPost httpPost = new HttpPost("http://vasp.siminn.is/smap/push?L=yellowbv&P=1yellow2&msisdn=00354385200004&T=text");
+		httpPost.setConfig(requestConfig);
+
+		CloseableHttpResponse response2 = httpclient.execute(httpPost);
+
+		return "yes";
+	}
+
+	@GetMapping("post")
+	@ResponseBody
+	public String myPost() throws IOException {
+		return "yes";
+	}
+
+	@GetMapping("ok")
+	@ResponseBody
+	public String ok() throws IOException {
+		final OkHttpClient client = new OkHttpClient();
+
+		HttpUrl url = HttpUrl.parse("http://vasp.siminn.is/smap/push?L=yellowbv&P=1yellow2&msisdn=00354385200004&T=text").newBuilder()
+				.build();
+		Request request = new Request.Builder()
+				.url(url)
+				.build();
+
+		client.newCall(request).enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				log.info("Request:", "Is NOT sent " + request.toString() + " METHOD: " + request.method());
+				e.printStackTrace();
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				log.error("Request:", "Is sent " + response.toString());
+			}
+
+
+		});
+
+		return "yes";
+	}
+
+	@GetMapping("yes")
+	@ResponseBody
+	public String yes() throws IOException, ExecutionException, InterruptedException {
+		final CompletableFuture future = new CompletableFuture();
+
+		OkHttpClient client = new OkHttpClient.Builder()
+				.build();
+		HttpUrl url = HttpUrl.parse("http://vasp.siminn.is/smap/push?L=yellowbv&P=1yellow2&msisdn=00354385200004&T=text").newBuilder()
+				.addQueryParameter("password", "123456")
+				.addQueryParameter("username", "123456")
+				.build();
+		Request request = new Request.Builder()
+				.url(url)
+				.post(okhttp3.RequestBody.create(null, new byte[]{}))
+				.build();
+		client.newCall(request).enqueue(new Callback() {
+											@Override
+											public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+												System.out.println("Request:Is sent " + response.body().toString());
+												future.complete("Hello World!");
+											}
+
+											@Override
+											public void onFailure(@NotNull Call call, @NotNull IOException e) {
+												e.printStackTrace();
+											}
+										}
+		);
+		future.get();
+
+		return "yes";
 	}
 	
 //	@PostMapping("stopAndStart")
