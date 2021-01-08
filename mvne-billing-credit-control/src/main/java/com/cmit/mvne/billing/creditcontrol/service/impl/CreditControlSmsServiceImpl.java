@@ -195,7 +195,7 @@ implements ICreditControlSmsService {
 					creditControlSmsError.setText(creditControlSms.getText());
 					creditControlSmsError.setError_info("调用CRM接口结果信息为:"+
 					String.valueOf(mvneCrmResponse.get("message"))+";调用短信网关结果信息为:"+result);
-					creditControlSmsError.setCreateDate(new Date());
+					creditControlSmsError.setCreateDate(creditControlSms.getCreateDate());
 					creditControlSmsErrMapper.insert(creditControlSmsError);
 				}
 			}

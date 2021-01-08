@@ -40,6 +40,9 @@ public class ReprocessRejectedController {
                                                             @PageableDefault Pageable pageable) throws IOException {
         log.info("Invoke interface /preparation/rejected, params: filename:{}, errorType:{}, errorCode:{}, status:{}, startTime:{}, endTime:{}",
                 filename, errorType, errorCode, status, startTime, endTime);
+        if (status.equals("All") || status.equals("all")) {
+            status = "";
+        }
         if ("Severe".equals(errorType)) {
             IPage<RejectedDTO> rejectedCdrs = reProcessRejectedService.getRejectedCdrsPage(filename, errorCode, status, startTime, endTime, pageable);
             return new MvneCrmResponse().success().data(rejectedCdrs);

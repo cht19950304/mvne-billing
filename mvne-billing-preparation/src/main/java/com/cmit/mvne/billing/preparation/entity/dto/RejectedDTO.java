@@ -1,5 +1,6 @@
 package com.cmit.mvne.billing.preparation.entity.dto;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,13 +18,20 @@ public class RejectedDTO {
 
     private Long id;
     @NotNull(message = "filename cannot be null!")
+    @ExcelProperty("File Name")
     private String filename;
+    @ExcelProperty("Error Code")
     private String errorCode;
     @NotNull(message = "recordNumber cannot be null!")
+    @ExcelProperty("Rec No.")
     private String recordNumber;
+    @ExcelProperty("File Receive Time")
     private Date fileReceiveTime;
+    @ExcelProperty("Error Creation tTime")
     private Date errorCreationTime;
+    @ExcelProperty("Reprocess Time")
     private Date reProcessTime;
+    @ExcelProperty("Reprocess Status")
     private String status;
 
 }
