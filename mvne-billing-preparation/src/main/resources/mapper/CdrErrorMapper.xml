@@ -169,7 +169,7 @@
 
   <select id="selectByRejectedRequestDTOPage"
           resultType="com.cmit.mvne.billing.preparation.entity.dto.RejectedDTO">
-    select ID id, ORIGIN_FILE filename, ERROR_CODE errorCode, LINE_NUMBER recordNumber, RECEIVE_TIME fileReceiveTime, CREATE_TIME errorCreationTime, REDO_TIME reProcessTime, STATUS status
+    select ID id, #{errorType, jdbcType=VARCHAR} errorType , ORIGIN_FILE filename, ERROR_CODE errorCode, LINE_NUMBER recordNumber, RECEIVE_TIME fileReceiveTime, CREATE_TIME errorCreationTime, REDO_TIME reProcessTime, STATUS status
     from cdr_error ce
     where 1=1
     <if test="filename != null and filename != ''">

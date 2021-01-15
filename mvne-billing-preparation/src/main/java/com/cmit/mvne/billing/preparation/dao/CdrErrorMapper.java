@@ -27,7 +27,7 @@ public interface CdrErrorMapper extends BaseMapper<CdrError> {
 
     int updateByPrimaryKey(CdrError record);
 
-    List<RejectedDTO> selectByRejectedRequestDTOPage(Page<RejectedDTO> page, @Param("filename") String filename, @Param("errorCode") String errorCode, @Param("status") String status, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
+    List<RejectedDTO> selectByRejectedRequestDTOPage(Page<RejectedDTO> page, @Param("errorType") String errorType, @Param("filename") String filename, @Param("errorCode") String errorCode, @Param("status") String status, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
     List<RejectedDTO> selectByRejectedRequestDTO(@Param("filename") String filename, @Param("errorCode") String errorCode, @Param("status") String status,  @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

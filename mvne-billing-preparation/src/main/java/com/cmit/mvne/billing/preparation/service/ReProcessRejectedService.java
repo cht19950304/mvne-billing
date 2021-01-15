@@ -14,13 +14,13 @@ import java.util.List;
  */
 public interface ReProcessRejectedService {
 
-    IPage<RejectedDTO> getRejectedCdrsPage(String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable);
+    IPage<RejectedDTO> getRejectedCdrsPage(String errorType, String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable);
 
-    IPage<RejectedDTO> getRejectedFilesPage(String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable) throws IOException;
+    IPage<RejectedDTO> getRejectedFilesPage(String errorType, String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable) throws IOException;
 
     void reprocessRejectedCdrs(List<Long> idList);
 
     List<RejectedDTO> getRejectedCdrs(String filename, String errorCode, String status, Long startTime, Long endTime);
 
-    List<RejectedDTO> getRejectedFiles(String filename, String errorCode, String status, Long startTime, Long endTime);
+    List<RejectedDTO> getRejectedFiles(String errorType, String filename, String errorCode, String status, Long startTime, Long endTime);
 }

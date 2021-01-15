@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2020/5/28
  */
 public interface CdrErrorService extends IService<CdrError> {
-    IPage<RejectedDTO> findRejectedCdrsPage(String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable);
+    IPage<RejectedDTO> findRejectedCdrsPage(String errorType, String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable);
 
     List<RejectedDTO> findRejectedCdrs(String filename, String errorCode, String status, Long startTime, Long endTime);
 }

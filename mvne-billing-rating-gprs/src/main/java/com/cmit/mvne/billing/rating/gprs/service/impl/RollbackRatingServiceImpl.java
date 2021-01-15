@@ -2,6 +2,7 @@ package com.cmit.mvne.billing.rating.gprs.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.cmit.mvne.billing.rating.gprs.service.RollbackRatingService;
+import com.cmit.mvne.billing.user.analysis.common.MvneException;
 import com.cmit.mvne.billing.user.analysis.entity.*;
 import com.cmit.mvne.billing.user.analysis.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +49,7 @@ public class RollbackRatingServiceImpl implements RollbackRatingService {
      */
     @Override
     //@Transactional(rollbackFor = Exception.class)
-    public List<RatingCdrGprsRerat> rollbackGprs(List<RatingCdrGprsRerat> ratingCdrGprsReratList, HashMap<String, Integer> resultMap) throws InterruptedException {
+    public List<RatingCdrGprsRerat> rollbackGprs(List<RatingCdrGprsRerat> ratingCdrGprsReratList, HashMap<String, Integer> resultMap) throws InterruptedException, MvneException {
         List<RatingCdrGprsRerat> failList = new ArrayList<>();
         List<RatingCdrGprsRerat> successList = new ArrayList<>();
         String BALANCE = "BalanceFail";
@@ -64,6 +65,9 @@ public class RollbackRatingServiceImpl implements RollbackRatingService {
             Boolean isUpdateBalanceFee = false;
             Boolean isUpdateFreeres = false;
 
+            ApsBalanceFee apsBalanceFee = null;
+            ApsFreeRes apsFreeRes = null;
+
             // 根据详单信息查询余额信息，并回退
             BigDecimal rollbackBalanceFee = null;
             BigDecimal fee1 = ratingCdrGprsRerat.getFee1();
@@ -73,7 +77,7 @@ public class RollbackRatingServiceImpl implements RollbackRatingService {
 
                 // 如果使用乐观锁
                 do {
-                    ApsBalanceFee apsBalanceFee = getBalanceFee(ratingCdrGprsRerat.getUserId());
+                    apsBalanceFee = getBalanceFee(ratingCdrGprsRerat.getUserId());
                     if (apsBalanceFee==null) {
                         break;
                     }
@@ -110,9 +114,17 @@ public class RollbackRatingServiceImpl implements RollbackRatingService {
 
                 // 如果使用乐观锁
                 do {
-                    ApsFreeRes apsFreeRes = getFreeRes(ratingCdrGprsRerat.getUserId(), ratingCdrGprsRerat.getProductInsId(), ratingCdrGprsRerat.getItemId());
+                    apsFreeRes = getFreeRes(ratingCdrGprsRerat.getUserId(), ratingCdrGprsRerat.getProductInsId(), ratingCdrGprsRerat.getItemId());
                     if (apsFreeRes==null) {
-                        break;
+                        // 如果回退免费资源失败，之前费用回退应该回滚
+                        apsBalanceFee = getBalanceFee(ratingCdrGprsRerat.getUserId());
+                        apsBalanceFee.setRemainFee(fee1);
+                        // 如果回滚之前的回退失败，直接回滚整个回退事务
+                        if (apsBalanceFeeService.updateById(apsBalanceFee)) {
+                            break;
+                        } else {
+                            throw new MvneException("Failed to rollback freeres, and failed to return balancefee!");
+                        }
                     }
                     // 如果用户当时没有这个场景的免费资源，那必定是扣的余额，前面已判断非0
                     rollbackFreeres = apsFreeRes.getUsedValue().subtract(deductFreeres);

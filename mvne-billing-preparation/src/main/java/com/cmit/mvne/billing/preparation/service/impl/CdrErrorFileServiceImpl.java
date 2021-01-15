@@ -20,18 +20,18 @@ import java.util.List;
 @Service
 public class CdrErrorFileServiceImpl extends ServiceImpl<CdrErrorFileMapper, CdrErrorFile> implements CdrErrorFileService {
     @Override
-    public IPage<RejectedDTO> findRejectedFilesPage(String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable) {
+    public IPage<RejectedDTO> findRejectedFilesPage(String errorType, String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable) {
 
         Page<RejectedDTO> page = new Page<>(pageable.getPageNumber(), pageable.getPageSize(), true);
-        List<RejectedDTO> rejectedDTOList = this.baseMapper.selectByRejectedRequestDTOPage(page, filename, errorCode, status,
+        List<RejectedDTO> rejectedDTOList = this.baseMapper.selectByRejectedRequestDTOPage(page, errorType, filename, errorCode, status,
                 startTime!=null? DateTimeUtil.getDateofTimestamp(startTime):null, endTime!=null?DateTimeUtil.getDateofTimestamp(endTime):null);
         page.setRecords(rejectedDTOList);
         return page;
     }
 
     @Override
-    public List<RejectedDTO> findRejectedFiles(String filename, String errorCode, String status, Long startTime, Long endTime) {
-        return this.baseMapper.selectByRejectedRequestDTO(filename, errorCode, status,
+    public List<RejectedDTO> findRejectedFiles(String errorType, String filename, String errorCode, String status, Long startTime, Long endTime) {
+        return this.baseMapper.selectByRejectedRequestDTO(errorType, filename, errorCode, status,
                 startTime!=null? DateTimeUtil.getDateofTimestamp(startTime):null, endTime!=null?DateTimeUtil.getDateofTimestamp(endTime):null);
     }
 }

@@ -21,10 +21,10 @@ import java.util.List;
 public class CdrErrorServiceImpl extends ServiceImpl<CdrErrorMapper, CdrError> implements CdrErrorService {
 
     @Override
-    public IPage<RejectedDTO> findRejectedCdrsPage(String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable) {
+    public IPage<RejectedDTO> findRejectedCdrsPage(String errorType, String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable) {
         Page<RejectedDTO> page = new Page<>(pageable.getPageNumber(), pageable.getPageSize(), true);
 
-        List<RejectedDTO> rejectedDTOList = this.baseMapper.selectByRejectedRequestDTOPage(page, filename, errorCode, status,
+        List<RejectedDTO> rejectedDTOList = this.baseMapper.selectByRejectedRequestDTOPage(page, errorType, filename, errorCode, status,
                 startTime!=null?DateTimeUtil.getDateofTimestamp(startTime):null, endTime!=null?DateTimeUtil.getDateofTimestamp(endTime):null);
 
         page.setRecords(rejectedDTOList);

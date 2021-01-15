@@ -1,5 +1,6 @@
 package com.cmit.mvne.billing.rating.gprs.service;
 
+import com.cmit.mvne.billing.user.analysis.common.MvneException;
 import com.cmit.mvne.billing.user.analysis.entity.RatingCdrGprsRerat;
 
 import java.util.HashMap;
@@ -11,5 +12,5 @@ import java.util.List;
  * @Date: Create in 2020/5/14 17:32
  */
 public interface RollbackRatingService {
-    List<RatingCdrGprsRerat> rollbackGprs(List<RatingCdrGprsRerat> ratingCdrGprsReratList, HashMap<String, Integer> resultMap) throws InterruptedException;
+    List<RatingCdrGprsRerat> rollbackGprs(List<RatingCdrGprsRerat> ratingCdrGprsReratList, HashMap<String, Integer> resultMap) throws InterruptedException, MvneException;
 }

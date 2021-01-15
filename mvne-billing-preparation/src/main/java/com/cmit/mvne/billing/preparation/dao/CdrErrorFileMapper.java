@@ -23,8 +23,8 @@ public interface CdrErrorFileMapper extends BaseMapper<CdrErrorFile> {
 
     int updateByPrimaryKey(CdrErrorFile record);
 
-    List<RejectedDTO> selectByRejectedRequestDTOPage(Page<RejectedDTO> page, String filename, String errorCode, String status, Date startTime, Date endTime);
+    List<RejectedDTO> selectByRejectedRequestDTOPage(Page<RejectedDTO> page, String errorType, String filename, String errorCode, String status, Date startTime, Date endTime);
 
-    List<RejectedDTO> selectByRejectedRequestDTO(String filename, String errorCode, String status, Date startTime, Date endTime);
+    List<RejectedDTO> selectByRejectedRequestDTO(String errorType, String filename, String errorCode, String status, Date startTime, Date endTime);
 
 }

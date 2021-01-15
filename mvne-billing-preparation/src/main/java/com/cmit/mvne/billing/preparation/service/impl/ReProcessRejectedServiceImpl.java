@@ -51,8 +51,8 @@ public class ReProcessRejectedServiceImpl implements ReProcessRejectedService {
 
 
     @Override
-    public IPage<RejectedDTO> getRejectedCdrsPage(String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable) {
-        return cdrErrorService.findRejectedCdrsPage(filename, errorCode, status, startTime, endTime, pageable);
+    public IPage<RejectedDTO> getRejectedCdrsPage(String errorType, String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable) {
+        return cdrErrorService.findRejectedCdrsPage(errorType, filename, errorCode, status, startTime, endTime, pageable);
     }
 
 
@@ -115,9 +115,9 @@ public class ReProcessRejectedServiceImpl implements ReProcessRejectedService {
      * @throws IOException
      */
     @Override
-    public IPage<RejectedDTO> getRejectedFilesPage(String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable) throws IOException {
+    public IPage<RejectedDTO> getRejectedFilesPage(String errorType, String filename, String errorCode, String status, Long startTime, Long endTime, Pageable pageable) throws IOException {
 
-        return cdrErrorFileService.findRejectedFilesPage(filename, errorCode, status, startTime, endTime, pageable);
+        return cdrErrorFileService.findRejectedFilesPage(errorType, filename, errorCode, status, startTime, endTime, pageable);
 
     }
 
@@ -145,6 +145,11 @@ public class ReProcessRejectedServiceImpl implements ReProcessRejectedService {
             if (cdrError.getErrorCode().equals("Severe255") || (cdrError.getErrorCode().equals("Severe250")) || (cdrError.getErrorCode().equals("Severe251"))) {
                 // 不重处理重单
                 log.error("CdrErrors contain dup error: {}", cdrError.getId());
+                continue;
+            }
+            if (cdrError.getStatus().equals(ErrorCodeStatus.SUCCESS)) {
+                // 不重处理已经成功处理的
+                log.error("CdrErrors have been reprocessed: {}", cdrError.getId());
                 continue;
             }
             String[] cdr = cdrParsingService.parseToArray(cdrError.getCdrDetail());
@@ -197,8 +202,8 @@ public class ReProcessRejectedServiceImpl implements ReProcessRejectedService {
     }
 
     @Override
-    public List<RejectedDTO> getRejectedFiles(String filename, String errorCode, String status, Long startTime, Long endTime) {
-        return cdrErrorFileService.findRejectedFiles(filename, errorCode, status, startTime, endTime);
+    public List<RejectedDTO> getRejectedFiles(String errorType, String filename, String errorCode, String status, Long startTime, Long endTime) {
+        return cdrErrorFileService.findRejectedFiles(errorType, filename, errorCode, status, startTime, endTime);
 
     }
 

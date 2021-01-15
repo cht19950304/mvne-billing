@@ -433,6 +433,8 @@ public class ProductManagementServiceImpl implements ProductManagementService {
         for (CountryZone record : countryZoneIPage.getRecords()) {
             CountryZoneDto countryZoneDto = new CountryZoneDto();
             BeanUtils.copyProperties(record, countryZoneDto);
+            countryZoneDto.setValidDate(record.getValidDate().getTime());
+            countryZoneDto.setExpireDate(record.getExpireDate().getTime());
             countryZoneDtoList.add(countryZoneDto);
         }
 

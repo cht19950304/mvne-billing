@@ -44,10 +44,10 @@ public class ReprocessRejectedController {
             status = "";
         }
         if ("Severe".equals(errorType)) {
-            IPage<RejectedDTO> rejectedCdrs = reProcessRejectedService.getRejectedCdrsPage(filename, errorCode, status, startTime, endTime, pageable);
+            IPage<RejectedDTO> rejectedCdrs = reProcessRejectedService.getRejectedCdrsPage("Severe", filename, errorCode, status, startTime, endTime, pageable);
             return new MvneCrmResponse().success().data(rejectedCdrs);
         }else if ("Fatal".equals(errorType)) {
-            IPage<RejectedDTO> rejectedFiles = reProcessRejectedService.getRejectedFilesPage(filename, errorCode, status, startTime, endTime, pageable);
+            IPage<RejectedDTO> rejectedFiles = reProcessRejectedService.getRejectedFilesPage("Fatal", filename, errorCode, status, startTime, endTime, pageable);
             return new MvneCrmResponse().success().data(rejectedFiles);
         } else {
             return new MvneCrmResponse().fail().message("Error type is illegal!");
@@ -65,7 +65,7 @@ public class ReprocessRejectedController {
 
         String excelFilename = null;
         if ("Severe".equals(errorType)) {
-            rejectedDTOList = reProcessRejectedService.getRejectedCdrsPage(filename, errorCode, status, startTime, endTime, pageable).getRecords();
+            rejectedDTOList = reProcessRejectedService.getRejectedCdrsPage("Severe", filename, errorCode, status, startTime, endTime, pageable).getRecords();
 
             if(startTime == null || endTime == null) {
                 excelFilename = "Rejected_Cdrs";
@@ -75,7 +75,7 @@ public class ReprocessRejectedController {
                         + "_" + DateTimeUtil.getDateTimeofTimestamp(endTime).format(DateTimeFormatter.ofPattern("yyyyMMdd"))), "UTF-8");
             }
         }else if ("Fatal".equals(errorType)) {
-            rejectedDTOList = reProcessRejectedService.getRejectedFilesPage(filename, errorCode, status, startTime, endTime, pageable).getRecords();
+            rejectedDTOList = reProcessRejectedService.getRejectedFilesPage("Fatal", filename, errorCode, status, startTime, endTime, pageable).getRecords();
             if(startTime == null || endTime == null) {
                 excelFilename = "Rejected_Files";
             } else {
