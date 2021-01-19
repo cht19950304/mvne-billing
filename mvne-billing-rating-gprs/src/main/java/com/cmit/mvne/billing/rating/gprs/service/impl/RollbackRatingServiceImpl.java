@@ -65,8 +65,11 @@ public class RollbackRatingServiceImpl implements RollbackRatingService {
             Boolean isUpdateBalanceFee = false;
             Boolean isUpdateFreeres = false;
 
-            ApsBalanceFee apsBalanceFee = null;
-            ApsFreeRes apsFreeRes = null;
+            ApsBalanceFee apsBalanceFee = getBalanceFee(ratingCdrGprsRerat.getUserId());
+            log.info("ApsBalanceFee before rollbacking: {}", apsBalanceFee);
+            ApsFreeRes apsFreeRes = getFreeRes(ratingCdrGprsRerat.getUserId(), ratingCdrGprsRerat.getProductInsId(), ratingCdrGprsRerat.getItemId());
+            log.info("ApsFreeRes before rollbacking: {}", apsFreeRes);
+            BigDecimal currBalance = apsBalanceFee==null?null : apsBalanceFee.getRemainFee();
 
             // 根据详单信息查询余额信息，并回退
             BigDecimal rollbackBalanceFee = null;
@@ -77,7 +80,6 @@ public class RollbackRatingServiceImpl implements RollbackRatingService {
 
                 // 如果使用乐观锁
                 do {
-                    apsBalanceFee = getBalanceFee(ratingCdrGprsRerat.getUserId());
                     if (apsBalanceFee==null) {
                         break;
                     }
@@ -114,11 +116,10 @@ public class RollbackRatingServiceImpl implements RollbackRatingService {
 
                 // 如果使用乐观锁
                 do {
-                    apsFreeRes = getFreeRes(ratingCdrGprsRerat.getUserId(), ratingCdrGprsRerat.getProductInsId(), ratingCdrGprsRerat.getItemId());
-                    if (apsFreeRes==null) {
+                    if ((apsFreeRes==null) && (apsBalanceFee!=null)) {
                         // 如果回退免费资源失败，之前费用回退应该回滚
                         apsBalanceFee = getBalanceFee(ratingCdrGprsRerat.getUserId());
-                        apsBalanceFee.setRemainFee(fee1);
+                        apsBalanceFee.setRemainFee(currBalance);
                         // 如果回滚之前的回退失败，直接回滚整个回退事务
                         if (apsBalanceFeeService.updateById(apsBalanceFee)) {
                             break;
