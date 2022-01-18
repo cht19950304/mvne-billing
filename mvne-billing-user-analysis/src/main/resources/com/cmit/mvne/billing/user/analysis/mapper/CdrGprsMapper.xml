@@ -96,13 +96,21 @@
         SELECT MSISDN,LOCAL_EVENT_TIME_STAMP,EVENT_TIME_STAMP,OPERATOR_CODE,APN,EVENT_DURATION,DOWNLOAD_VOL,UPLOAD_VOL,FEE1 FROM (
         <foreach collection="tableNameList" item="item" index="index" separator="union all">
             SELECT MSISDN,LOCAL_EVENT_TIME_STAMP,EVENT_TIME_STAMP,OPERATOR_CODE,APN,EVENT_DURATION,DOWNLOAD_VOL,UPLOAD_VOL,FEE1 FROM rating_cdr_gprs_${item}
-            WHERE MSISDN='${msisdn}' and  RECORD_TYPE='${xdrType}' and LOCAL_EVENT_TIME_STAMP between  #{startDate} and  #{endDate}
+            WHERE MSISDN='${msisdn}' and  RECORD_TYPE='${xdrType}' and LOCAL_EVENT_TIME_STAMP between  '${startDate}' and  '${endDate}'
         </foreach>
         )alias
 <!--        <if test="start != null and end != null">
             limit #{start}, #{end}
         </if>-->
     </select>
+
+    <select id="selectCdrInfo" resultMap="selectCdrInfoMap"  >
+        SELECT MSISDN,LOCAL_EVENT_TIME_STAMP,EVENT_TIME_STAMP,OPERATOR_CODE,APN,EVENT_DURATION,DOWNLOAD_VOL,UPLOAD_VOL,FEE1 FROM rating_cdr_gprs_${tableName}
+            WHERE MSISDN='${msisdn}' and  RECORD_TYPE='${xdrType}' and LOCAL_EVENT_TIME_STAMP between  '${startDate}' and  '${endDate}'
+    </select>
+
+        <!--WHERE MSISDN='${msisdn}' and  RECORD_TYPE='${xdrType}' and LOCAL_EVENT_TIME_STAMP between  #{startDate} and  #{endDate}-->
+
 
     <select id="checkTableExistsWithShow" parameterType="String" resultType="java.util.Map">
         show tables like #{tableName}

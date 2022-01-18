@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.alibaba.fastjson.annotation.JSONType;
 import lombok.Data;
 
 //import org.springframework.format.annotation.DateTimeFormat;
@@ -20,6 +21,7 @@ import lombok.Data;
  *
  */
 @Data
+@JSONType(orders={"orderId","orderType","busiOperCode","custId","userId","msisdn","factMoney","createDate","doneDate","xferDate"})
 public class IOrdOrderDto {
 	
 	@NotNull

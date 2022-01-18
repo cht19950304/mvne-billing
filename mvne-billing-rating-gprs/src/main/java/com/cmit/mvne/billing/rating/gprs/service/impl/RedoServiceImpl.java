@@ -29,7 +29,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -110,8 +109,10 @@ public class RedoServiceImpl implements RedoService {
         int size = redoDto.getSize()==0?Integer.MAX_VALUE:redoDto.getSize();
 
         // 转换参数
-        Date finishDateS = (finishTimeS==null?null:new Date(finishTimeS));
-        Date finishDateE = (finishTimeE==null?null:new Date(finishTimeE));
+        Date finishDateS = (finishTimeS==null?null:new Date(finishTimeS*1000));
+        Date finishDateE = (finishTimeE==null?null:new Date(finishTimeE*1000));
+//        Date finishDateS = (finishTimeS==null?null:new Date(finishTimeS));
+//        Date finishDateE = (finishTimeE==null?null:new Date(finishTimeE));
         List<Long> tableIdsList = StringUtil.str2LongLost(tableIds);
 
 
@@ -196,10 +197,10 @@ public class RedoServiceImpl implements RedoService {
         int size = reratDto.getSize()==0?Integer.MAX_VALUE:reratDto.getSize();
 
         // 转换参数
-        Date createDateS = (createTimeS==null?null:new Date(createTimeS));
-        Date createDateE = (createTimeE==null?null:new Date(createTimeE));
-        Date finishDateS = (finishTimeS==null?null:new Date(finishTimeS));
-        Date finishDateE = (finishTimeE==null?null:new Date(finishTimeE));
+        Date createDateS = (createTimeS==null?null:new Date(createTimeS*1000));
+        Date createDateE = (createTimeE==null?null:new Date(createTimeE*1000));
+        Date finishDateS = (finishTimeS==null?null:new Date(finishTimeS*1000));
+        Date finishDateE = (finishTimeE==null?null:new Date(finishTimeE*1000));
         List<Long> idsList = StringUtil.str2LongLost(ids);
 
         //LambdaQueryWrapper<CdrGprs> lambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -268,10 +269,10 @@ public class RedoServiceImpl implements RedoService {
         int size = reratDto.getSize()==0?Integer.MAX_VALUE:reratDto.getSize();
 
         // 转换参数
-        Date createDateS = (createTimeS==null?null:new Date(createTimeS));
-        Date createDateE = (createTimeE==null?null:new Date(createTimeE));
-        Date finishDateS = (finishTimeS==null?null:new Date(finishTimeS));
-        Date finishDateE = (finishTimeE==null?null:new Date(finishTimeE));
+        Date createDateS = (createTimeS==null?null:new Date(createTimeS*1000));
+        Date createDateE = (createTimeE==null?null:new Date(createTimeE*1000));
+        Date finishDateS = (finishTimeS==null?null:new Date(finishTimeS*1000));
+        Date finishDateE = (finishTimeE==null?null:new Date(finishTimeE*1000));
         List<Long> idsList = StringUtil.str2LongLost(ids);
 
         //LambdaQueryWrapper<RatingCdrGprsRerat> lambdaQueryWrapper = new LambdaQueryWrapper<>();

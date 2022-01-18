@@ -39,8 +39,13 @@ public class CdrGprsServiceImpl extends ServiceImpl<CdrGprsMapper, CdrGprs> impl
     }
 
     @Override
-    public List<QueryUserCdrInfoDto> mulSelectCdrInfo(IPage<QueryUserCdrInfoDto> page,List<String> tableNameList, String msisdn, Date startDate, Date endDate, String xdrType) {
+    public List<QueryUserCdrInfoDto> mulSelectCdrInfo(IPage<QueryUserCdrInfoDto> page,List<String> tableNameList, String msisdn, String startDate, String endDate, String xdrType) {
         return cdrGprsMapper.mulSelectCdrInfo(page,tableNameList,msisdn,startDate,endDate,xdrType);
+    }
+
+    @Override
+    public List<QueryUserCdrInfoDto> selectCdrInfo(String tableName, String msisdn, String startDate, String endDate, String xdrType) {
+        return cdrGprsMapper.selectCdrInfo(tableName,msisdn,startDate,endDate,xdrType);
     }
 
 /*    @Override

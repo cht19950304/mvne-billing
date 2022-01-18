@@ -3,6 +3,7 @@
  */
 package com.cmit.mvne.billing.user.analysis.entity;
 
+import com.alibaba.fastjson.annotation.JSONType;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
  *
  */
 @Data
+@JSONType(orders={"orderId","userId","rectype","productFee","productId","productInsId","validDate","expireDate"})
 public class IProdDto {
 	@NotNull
 	private Long orderId;

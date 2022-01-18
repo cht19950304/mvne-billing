@@ -2,13 +2,15 @@ package com.cmit.mvne.billing.user.analysis.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Luxf
@@ -16,7 +18,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_roam_zone_group")
-public class SysRoamZoneGroup  {
+public class SysRoamZoneGroup {
 
     /**
      * 区域id，对应sys_country的country_id

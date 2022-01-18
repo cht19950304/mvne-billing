@@ -75,7 +75,7 @@ public class BdOperatorCodeServiceTest {
     public void findByOperatorCode() {
 
         List<BdOperatorCode> chntd = operatorCodeService.findByOperatorCode("CHNTD");
-        log.info(chntd.get(0).getCountryName());
+//        log.info(chntd.get(0).getCountryName());
 
     }
 }

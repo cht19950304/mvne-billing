@@ -1,5 +1,6 @@
 package com.cmit.mvne.billing.user.analysis.mapper;
 
+import com.baomidou.mybatisplus.annotation.SqlParser;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -20,7 +21,9 @@ import java.util.Map;
  */
 public interface CdrGprsMapper extends BaseMapper<CdrGprs> {
 
-    List<QueryUserCdrInfoDto> mulSelectCdrInfo(IPage<QueryUserCdrInfoDto> page,List<String> tableNameList, String msisdn, Date startDate, Date endDate, String xdrType) ;
+    List<QueryUserCdrInfoDto> mulSelectCdrInfo(IPage<QueryUserCdrInfoDto> page,List<String> tableNameList, String msisdn, String startDate, String endDate, String xdrType) ;
+
+    List<QueryUserCdrInfoDto> selectCdrInfo(String tableName, String msisdn, String startDate, String endDate, String xdrType) ;
 
     //Integer countMulSelectCdr(List<String> tableNameList, String msisdn, Date startDate, Date endDate, String xdrType) ;
 

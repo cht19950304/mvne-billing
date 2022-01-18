@@ -50,6 +50,12 @@ public class InfoManageController {
 		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&");
 	}
 
+	@PostMapping("test11")
+	@ResponseBody
+	public MvneInfoManageResponse test(@RequestBody @NotNull Test test) {
+		return new MvneInfoManageResponse().message("hello "+test.getName());
+	}
+
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
 	public MvneInfoManageResponse createUser(@RequestBody @NotNull InfoManageCrmEntity infoManageCrmEntity) {
 		//String lockKey = null;
@@ -190,7 +196,7 @@ public class InfoManageController {
 		}
 		return new MvneInfoManageResponse().success();
 	}
-	
+
 	@PostMapping("reCharge")
 	@ResponseBody
 	public MvneInfoManageResponse reCharge(@RequestBody @NotNull InfoManageCrmEntity infoManage) {

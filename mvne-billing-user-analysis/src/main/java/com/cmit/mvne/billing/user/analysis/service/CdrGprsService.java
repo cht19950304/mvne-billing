@@ -28,7 +28,10 @@ public interface CdrGprsService extends IService<CdrGprs> {
 
     void insertCdr(List<CdrGprs> cdrGprsList);
 
-    List<QueryUserCdrInfoDto> mulSelectCdrInfo(IPage<QueryUserCdrInfoDto> page,List<String> tableNameList, String msisdn, Date startDate, Date endDate, String xdrType);
+    List<QueryUserCdrInfoDto> mulSelectCdrInfo(IPage<QueryUserCdrInfoDto> page,List<String> tableNameList, String msisdn, String startDate, String endDate, String xdrType);
+//    List<QueryUserCdrInfoDto> mulSelectCdrInfo(IPage<QueryUserCdrInfoDto> page,List<String> tableNameList, String msisdn, Date startDate, Date endDate, String xdrType);
+
+    List<QueryUserCdrInfoDto> selectCdrInfo(String tableName, String msisdn, String startDate, String endDate, String xdrType);
 
     //Integer countMulSelectCdr(List<String> tableNameList, String msisdn, Date startDate, Date endDate, String xdrType) ;
 

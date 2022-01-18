@@ -2,6 +2,7 @@ package com.cmit.mvne.billing.preparation.controller;
 
 import com.cmit.mvne.billing.preparation.util.GsonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +36,11 @@ public class ReprocessRejectedControllerTest {
 
     private MockMvc mockMvc;
 
+    @Test
+    public void test() {
+        Assert.assertEquals("a", "a");
+    }
+
     @Before
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -48,7 +54,7 @@ public class ReprocessRejectedControllerTest {
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.code").value(200))
                 .andReturn().getResponse().getContentAsString();
-        log.info(GsonUtil.toPrettyFormat(result));
+//        log.info(GsonUtil.toPrettyFormat(result));
     }
 
     @Test
@@ -57,12 +63,12 @@ public class ReprocessRejectedControllerTest {
         idList.add(1L);
         idList.add(2L);
         String context = GsonUtil.parseToJsonString(idList);
-        log.info(context);
+//        log.info(context);
         String result = mockMvc.perform(post("/preparation/rejected/reprocess")
                 .content(context).contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.code").value(200))
                 .andReturn().getResponse().getContentAsString();
 
-        log.info("result : {}", result);
+//        log.info("result : {}", result);
     }
 }

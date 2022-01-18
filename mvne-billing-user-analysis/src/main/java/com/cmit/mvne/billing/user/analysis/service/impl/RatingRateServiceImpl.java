@@ -49,7 +49,7 @@ public class RatingRateServiceImpl extends ServiceImpl<RatingRateMapper, RatingR
         return ratingRateMapper.selectOne(queryWrapper);
     }
 
-    /**
+     /**
      * 根据productId查询所有科目的的套外费用
      * @param productId
      * @return

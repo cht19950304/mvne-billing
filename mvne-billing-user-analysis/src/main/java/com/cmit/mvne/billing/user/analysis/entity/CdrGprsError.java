@@ -370,6 +370,10 @@ public class CdrGprsError {
         BeanUtils.copyProperties(cdrGprs, this);
     }
 
+    public CdrGprsError() {
+
+    }
+
 
     public String getDupKey() {
         StringBuilder sb = new StringBuilder();

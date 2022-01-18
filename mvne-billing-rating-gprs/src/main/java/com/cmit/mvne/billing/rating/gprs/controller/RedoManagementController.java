@@ -1,7 +1,8 @@
 package com.cmit.mvne.billing.rating.gprs.controller;
 
 import com.alibaba.excel.EasyExcel;
-import com.baomidou.mybatisplus.core.MybatisConfiguration;
+//import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
+import com.cmit.mvne.billing.rating.gprs.util.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cmit.mvne.billing.rating.gprs.common.MvneCrmResponse;
 import com.cmit.mvne.billing.rating.gprs.config.MyBatisPlusConfig;
@@ -19,31 +20,25 @@ import com.cmit.mvne.billing.user.analysis.entity.RatingCdrGprsRerat;
 import com.cmit.mvne.billing.user.analysis.service.CdrGprsErrorService;
 import com.cmit.mvne.billing.user.analysis.service.CdrGprsService;
 import com.cmit.mvne.billing.user.analysis.service.RatingCdrGprsReratService;
-import com.cmit.mvne.billing.user.analysis.util.StringUtil;
-import feign.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.FeignContext;
-import org.springframework.cloud.openfeign.support.FeignUtils;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @Author: caikunchi
@@ -132,7 +127,7 @@ public class RedoManagementController {
      * @throws MvneException
      * @throws InterruptedException
      */
-    //@RequestMapping(value = "/redoBySql/gprs", method = RequestMethod.POST)
+    @RequestMapping(value = "/redoBySql/gprs", method = RequestMethod.POST)
     MvneCrmResponse redoGprsBySql(@RequestParam(value = "whereSql") String whereSql) throws MvneException, InterruptedException {
         // 防注入检测
         String selectSql = "select * from rating_cdr_gprs_error " + whereSql;
@@ -286,7 +281,7 @@ public class RedoManagementController {
      * @param whereSql 条件语句，不包括';'
      * @return
      */
-    //@RequestMapping(value = "/reratBySql/gprs", method = RequestMethod.POST)
+    @RequestMapping(value = "/reratBySql/gprs", method = RequestMethod.POST)
     MvneCrmResponse reratGprsBySql(@RequestParam(value = "startDate") String startDate,
                      @RequestParam(value = "endDate") String endDate,
                      @RequestParam(value = "whereSql") String whereSql) {
@@ -410,7 +405,6 @@ public class RedoManagementController {
         } catch (Exception e) {
             log.error("Export Error!", e);
         }
-
     }
 
     @RequestMapping(value = "/redo/exportAllErr/gprs", method = RequestMethod.POST)
@@ -505,7 +499,7 @@ public class RedoManagementController {
 
     }*/
 
-    private <T> void exportExcel(HttpServletResponse response, String fileName, List<T> exportList, Class clazz) throws IOException {
+    /*private <T> void exportExcel(HttpServletResponse response, String fileName, List<T> exportList, Class clazz) throws IOException {
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
@@ -515,6 +509,24 @@ public class RedoManagementController {
         response.addHeader("Content-disposition", str);
 
         EasyExcel.write(response.getOutputStream(), clazz).sheet("sheet1").doWrite(exportList);
+    }*/
+
+    private <T> void exportExcel(HttpServletResponse response, String fileName, List<T> exportList, Class clazz) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+
+        String str = "attachment;filename=" + new String(fileName.getBytes("GBK"), "iso-8859-1");
+        response.setContentType("application/vnd.ms-excel; charset=UTF-8");
+        response.addHeader("Content-disposition", str);
+
+        //单元格宽度自动适应数据长度
+        EasyExcel.write(response.getOutputStream(), clazz).registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .sheet("sheet1").doWrite(exportList);
+
+//        //单元格宽度默认
+//        EasyExcel.write(response.getOutputStream(), clazz).sheet("sheet1").doWrite(exportList);
     }
+
 
 }

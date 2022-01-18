@@ -6,7 +6,6 @@ import com.cmit.mvne.billing.user.analysis.common.MvneException;
 import com.cmit.mvne.billing.user.analysis.entity.*;
 import com.cmit.mvne.billing.user.analysis.service.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.cmit.mvne.billing.rating.gprs.common.ReratStatus.*;
 

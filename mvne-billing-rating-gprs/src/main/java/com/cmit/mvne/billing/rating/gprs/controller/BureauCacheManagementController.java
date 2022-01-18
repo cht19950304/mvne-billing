@@ -1,16 +1,13 @@
 package com.cmit.mvne.billing.rating.gprs.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cmit.mvne.billing.rating.gprs.cache.BureauCacheManager;
 import com.cmit.mvne.billing.rating.gprs.cache.CaffeineObjectMapper;
 import com.cmit.mvne.billing.rating.gprs.service.BureauCacheService;
 import com.cmit.mvne.billing.user.analysis.cache.LocalCaffeineCacheManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.benmanes.caffeine.cache.Cache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -33,6 +30,8 @@ public class BureauCacheManagementController {
 
     @Autowired
     BureauCacheService bureauCacheService;
+    @Autowired
+    LocalCaffeineCacheManager localCaffeineCacheManager;
 
     /*@Autowired
     @SuppressWarnings("all")
@@ -137,4 +136,5 @@ public class BureauCacheManagementController {
             return "false";
         }
     }
+
 }

@@ -61,7 +61,7 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisConnectionFactory lettuceConnectionFactory() {
+    public LettuceConnectionFactory lettuceConnectionFactory() {
 
         RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration()
                 .master(sentinelMaster)

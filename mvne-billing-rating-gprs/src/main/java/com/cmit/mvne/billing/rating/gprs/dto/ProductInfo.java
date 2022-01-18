@@ -1,10 +1,10 @@
 package com.cmit.mvne.billing.rating.gprs.dto;
 
+import com.cmit.mvne.billing.rating.gprs.remote.Resource;
 import com.cmit.mvne.billing.rating.gprs.util.MeasureExchangeUtils;
 import com.cmit.mvne.billing.user.analysis.entity.FreeRes;
 import com.cmit.mvne.billing.user.analysis.entity.PmProduct;
 import com.cmit.mvne.billing.user.analysis.entity.RatingRate;
-import com.cmit.mvne.billing.rating.gprs.remote.Resource;
 import lombok.Data;
 
 import javax.validation.constraints.*;

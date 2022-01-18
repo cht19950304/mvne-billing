@@ -1,8 +1,5 @@
 package com.cmit.mvne.billing.rating.gprs.controller;
 
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,11 +10,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmit.mvne.billing.rating.gprs.common.DistributeLock;
 import com.cmit.mvne.billing.rating.gprs.common.Measures;
 import com.cmit.mvne.billing.rating.gprs.creditcontrol.CreditControl;
-import com.cmit.mvne.billing.rating.gprs.dto.ProductInfo;
-import com.cmit.mvne.billing.rating.gprs.config.MyBatisPlusConfig;
 import com.cmit.mvne.billing.rating.gprs.creditcontrol.CreditControlOperation;
 import com.cmit.mvne.billing.rating.gprs.creditcontrol.CreditControlReason;
 import com.cmit.mvne.billing.rating.gprs.creditcontrol.SmsGatewayDto;
+import com.cmit.mvne.billing.rating.gprs.dto.ProductInfo;
+import com.cmit.mvne.billing.rating.gprs.config.MyBatisPlusConfig;
 import com.cmit.mvne.billing.rating.gprs.dto.RedoDto;
 import com.cmit.mvne.billing.rating.gprs.dto.ReratDto;
 import com.cmit.mvne.billing.rating.gprs.remote.TestClient;
@@ -29,8 +26,6 @@ import com.cmit.mvne.billing.rating.gprs.service.ReratService;
 import com.cmit.mvne.billing.rating.gprs.util.DateUtils;
 import com.cmit.mvne.billing.rating.gprs.util.MeasureExchangeUtils;
 import com.cmit.mvne.billing.user.analysis.common.MvneException;
-import com.cmit.mvne.billing.user.analysis.dto.QueryCdrGprsDto;
-import com.cmit.mvne.billing.user.analysis.dto.QueryCdrGprsErrDto;
 import com.cmit.mvne.billing.user.analysis.dto.QueryCdrGprsReratDto;
 import com.cmit.mvne.billing.user.analysis.entity.*;
 import com.cmit.mvne.billing.user.analysis.mapper.CdrGprsErrorMapper;
@@ -43,20 +38,13 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @Author: caikunchi
@@ -141,7 +129,7 @@ public class TestController {
         reratDto.setPage(1);
         reratDto.setSize(10);
         reratDto.setIds("62");
-
+        
         return redoService.gprsReratForRerat(reratDto);
     }
 
@@ -434,8 +422,13 @@ public class TestController {
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    String test() {
+    public String test() {
         return "go";
+    }
+
+    @RequestMapping(value = "/test2", method = RequestMethod.GET)
+    String test2(@RequestBody String s) {
+        return "hello "+s+"!";
     }
 
     @RequestMapping(value = "/zone", method = RequestMethod.POST)

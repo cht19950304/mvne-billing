@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cmit.mvne.billing.rating.gprs.cache.BureauCacheManager;
-import com.cmit.mvne.billing.rating.gprs.common.DateComms;
 import com.cmit.mvne.billing.rating.gprs.dto.CountryZoneDto;
+import com.cmit.mvne.billing.rating.gprs.dto.CountryZoneDto2;
 import com.cmit.mvne.billing.rating.gprs.service.BureauCacheService;
 import com.cmit.mvne.billing.rating.gprs.service.ProductManagementService;
 import com.cmit.mvne.billing.user.analysis.entity.*;
@@ -390,7 +390,6 @@ public class ProductManagementServiceImpl implements ProductManagementService {
 
         MvneCrmResponse mvneCrmResponse = new MvneCrmResponse();
         mvneCrmResponse.success().data(productInfoListPage);
-
         Object data = mvneCrmResponse.get("data");
         IPage<ProductInfo> productInfoListPage1 = (IPage<ProductInfo>) data;
 
@@ -409,8 +408,13 @@ public class ProductManagementServiceImpl implements ProductManagementService {
                     .le(SysRoamZoneGroup::getValidDate, new Date());
         }
         List<SysRoamZoneGroup> sysRoamZoneGroupList = sysRoamZoneGroupService.list(lambdaQueryWrapper);
-        List<String> countryGroupList = sysRoamZoneGroupList.stream().map(SysRoamZoneGroup::getCountryGroup).distinct().collect(Collectors.toList());
-        return new MvneCrmResponse().success().data(countryGroupList);
+//        List<String> countryGroupList = sysRoamZoneGroupList.stream().map(SysRoamZoneGroup::getCountryGroup).distinct().collect(Collectors.toList());
+//        return new MvneCrmResponse().success().data(countryGroupList);
+        List<CountryZoneDto2> countryZoneDto2List = new ArrayList<>();
+        for (SysRoamZoneGroup sysRoamZoneGroup: sysRoamZoneGroupList) {
+            countryZoneDto2List.add(new CountryZoneDto2(sysRoamZoneGroup.getGroupId(),sysRoamZoneGroup.getGroupName(),sysRoamZoneGroup.getIso(),"","","",""));
+        }
+        return new MvneCrmResponse().success().data(countryZoneDto2List);
     }
 
     @Override

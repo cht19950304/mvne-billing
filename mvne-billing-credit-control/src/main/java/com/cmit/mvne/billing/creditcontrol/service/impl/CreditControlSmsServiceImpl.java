@@ -3,11 +3,7 @@
  */
 package com.cmit.mvne.billing.creditcontrol.service.impl;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -24,6 +20,9 @@ import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestOperations;
@@ -50,12 +49,16 @@ import com.cmit.mvne.billing.creditcontrol.util.DateUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.net.ssl.HttpsURLConnection;
+
 /**
  * @author jiangxm02
  *
  */
 @Slf4j
 @Service
+@Component
+@Configuration
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class CreditControlSmsServiceImpl extends ServiceImpl<CreditControlSmsMapper, CreditControlSms> 
 implements ICreditControlSmsService {
@@ -419,20 +422,52 @@ implements ICreditControlSmsService {
 	*/
 	
 	//成功的返回值为“OK”
-		public String sendSmsByHttpPost(CreditControlSms creditControlSms) throws IOException {
-			CloseableHttpClient httpclient = HttpClients.createDefault();
-			RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(3000)
-					.setSocketTimeout(3000).setConnectTimeout(3000).build();
-			String encodeInfo = URLEncoder.encode(creditControlSms.getText(), "ISO-8859-1");
-			String url = pUrl + "?L=" + username + "&P=" + password + "&msisdn=00" + creditControlSms.getMsisdn() + "&T=" + encodeInfo;
+	public String sendSmsByHttpPost(CreditControlSms creditControlSms) throws IOException {
+		//发送http请求
+		CloseableHttpClient httpclient = HttpClients.createDefault();
+		RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(3000)
+				.setSocketTimeout(3000).setConnectTimeout(3000).build();
+		String encodeInfo = URLEncoder.encode(creditControlSms.getText(), "ISO-8859-1");
+		String url = pUrl + "?L=" + username + "&P=" + password + "&msisdn=00" + creditControlSms.getMsisdn() + "&T=" + encodeInfo;
 
-			HttpPost httpPost = new HttpPost(url);
-			httpPost.setConfig(requestConfig);
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setConfig(requestConfig);
 
-			CloseableHttpResponse response2 = httpclient.execute(httpPost);
-			log.info("给号码:"+creditControlSms.getMsisdn()+"的短信的发送状态为:"+response2.getStatusLine());
-			return "OK";
+		CloseableHttpResponse response2 = httpclient.execute(httpPost);
+		log.info("给号码:"+creditControlSms.getMsisdn()+"的短信的发送状态为:"+response2.getStatusLine());
+		return "OK";
+	}
+
+	//成功的返回值为“OK”
+	public String sendSmsByHttpsPost(CreditControlSms creditControlSms) throws IOException {
+		//发送https请求
+		String encodeInfo = URLEncoder.encode(creditControlSms.getText(), "ISO-8859-1");
+		String url = pUrl + "?L=" + username + "&P=" + password + "&msisdn=00" + creditControlSms.getMsisdn() + "&T=" + encodeInfo;
+//		String url = "http://vasp.siminn.is/smap/push?L=yellowbv&P=1yellow2&msisdn=001700000678&T=test";
+		URL reqURL = new URL(null, url, new sun.net.www.protocol.https.Handler());//创建URL对象
+		HttpsURLConnection httpsConn = (HttpsURLConnection) reqURL.openConnection();
+
+		httpsConn.setDoOutput(true);
+		httpsConn.setRequestMethod("POST");
+		OutputStreamWriter out = new OutputStreamWriter(httpsConn.getOutputStream());
+		out.write("HTTPS Request");
+		out.flush();
+		out.close();
+
+		//取得该连接的输入流，以读取响应内容 
+		InputStreamReader insr = new InputStreamReader(httpsConn.getInputStream());
+
+		//读取服务器的响应内容并显示
+		int respInt = insr.read();
+		StringBuffer sb = new StringBuffer();
+		while (respInt != -1) {
+//			System.out.print((char) respInt);
+			sb.append((char)respInt);
+			respInt = insr.read();
 		}
+		log.info("给号码:"+creditControlSms.getMsisdn()+"的短信的发送状态为:"+sb.toString());
+		return "OK";
+	}
 
 	@Override
 	public void deleteUser(int params) throws Exception{

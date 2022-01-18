@@ -1,6 +1,7 @@
 package com.cmit.mvne.billing.rating.gprs.dto;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONType;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ import java.util.List;
  */
 
 @Data
+@JSONType(orders={"tableDate","createTimeS","createTimeE","finishTimeS","finishTimeE","msisdn","productId","itemId","reratStatus","ids","idList","page","size"})
 public class ReratDto {
     @NotNull
     @NotBlank

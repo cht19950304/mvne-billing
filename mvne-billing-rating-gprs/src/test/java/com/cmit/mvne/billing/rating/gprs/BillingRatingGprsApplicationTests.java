@@ -1,12 +1,13 @@
 package com.cmit.mvne.billing.rating.gprs;
 
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = BillingRatingGprsApplication.class)
 public class BillingRatingGprsApplicationTests {
 
 	@Test

@@ -1,6 +1,7 @@
 package com.cmit.mvne.billing.rating.gprs.dto;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONType;
 import lombok.Data;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,6 +15,7 @@ import java.util.List;
  */
 
 @Data
+@JSONType(orders={"msisdn","finishTimeS","finishTimeE","originalFile","errCode","redoFlag","tableIds","page","size"})
 public class RedoDto {
     String msisdn;
 

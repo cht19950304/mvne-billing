@@ -5,14 +5,12 @@ import com.cmit.mvne.billing.rating.gprs.remote.Resource;
 import com.cmit.mvne.billing.rating.gprs.service.ProductManagementService;
 import com.cmit.mvne.billing.rating.gprs.common.MvneCrmResponse;
 import com.cmit.mvne.billing.rating.gprs.dto.ProductInfo;
-import com.cmit.mvne.billing.user.analysis.entity.CountryZone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @Author: caikunchi

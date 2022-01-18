@@ -3,6 +3,7 @@
  */
 package com.cmit.mvne.billing.user.analysis.entity;
 
+import com.alibaba.fastjson.annotation.JSONType;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
  *
  */
 @Data
+@JSONType(orders={"orderId","userId","acctId","custId","msisdn","imsi","channelCode","validDate","expireDate","userStatus"})
 public class IUserDto {
 	@NotNull
 	private Long orderId;

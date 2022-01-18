@@ -1,23 +1,13 @@
 package com.cmit.mvne.billing.rating.gprs.cache;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.cmit.mvne.billing.rating.gprs.service.BureauCacheService;
-import com.cmit.mvne.billing.user.analysis.entity.*;
-import com.cmit.mvne.billing.user.analysis.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * @Author: caikunchi
@@ -34,7 +24,7 @@ public class BureauCacheManager implements ApplicationListener<ApplicationReadyE
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         load();
-        log.info("Load cache succeed!");
+//        log.info("Load cache succeed!");
     }
 
     /**

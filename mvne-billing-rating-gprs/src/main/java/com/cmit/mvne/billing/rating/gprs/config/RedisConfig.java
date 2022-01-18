@@ -49,6 +49,17 @@ public class RedisConfig {
     private String password;
 
     @Bean
+    public LettuceConnectionFactory lettuceConnectionFactory(){
+        RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration()
+                .master(sentinelMaster)
+                .sentinel(node1,port1)
+                .sentinel(node2,port2)
+                .sentinel(node3,port3);
+        sentinelConfig.setPassword(RedisPassword.of(password));
+        return new LettuceConnectionFactory(sentinelConfig);
+    }
+
+    @Bean
     public RedisTemplate<String, Object> redisCacheTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
         // springboot2默认redisTemplate使用lettuce客户端
         // 直接在配置中配置spring.redis.lettuce.pool相关参数即可使用lettuce资源池
@@ -57,12 +68,13 @@ public class RedisConfig {
         template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());
         template.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
+        lettuceConnectionFactory.afterPropertiesSet();
         template.setConnectionFactory(lettuceConnectionFactory);
         template.setEnableTransactionSupport(true);
         return template;
     }
 
-    @Bean
+    /*@Bean
     public RedisConnectionFactory lettuceConnectionFactory() {
 
         RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration()
@@ -73,7 +85,7 @@ public class RedisConfig {
         sentinelConfig.setPassword(RedisPassword.of(password));
 
         return new LettuceConnectionFactory(sentinelConfig);
-    }
+    }*/
 
     /**
      * 配置LettuceClientConfiguration 包括线程池配置和安全项配置
